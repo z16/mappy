@@ -18,7 +18,8 @@ using System.Globalization;
 namespace mappy {
    public class FFXIGameInstance : GameInstance, IFFXIGameContainer, IFFXIMapImageContainer {
       //assembler code to scan for in order to locate pointers to data
-      public static readonly string DEFAULT_SIG_ZONE_ID     = ">>0fbfc88bc1894e??a3";
+      //public static readonly string DEFAULT_SIG_ZONE_ID     = ">>0fbfc88bc1894e??a3";
+      public static readonly string DEFAULT_SIG_ZONE_ID     = "7CE18B4E088B15";
       public static readonly string DEFAULT_SIG_ZONE_SHORT  = "5f5ec38b0cf5";
       public static readonly string DEFAULT_SIG_SPAWN_START = "<<8b3e3bfb74128bcfe8";
       public static readonly string DEFAULT_SIG_SPAWN_END   = "891e83c60481fe";
@@ -260,6 +261,8 @@ namespace mappy {
          try {
             //grab the current zone id
             Int32 ZoneID = reader.ReadStruct<Int32>(pZoneID);
+            if (ZoneID > 0xFF)
+                ZoneID = ZoneID - 0x1BC;
 
             //stop all reading while the zone is in flux
             if(ZoneID == 0) {
@@ -283,8 +286,8 @@ namespace mappy {
 
                //get the zone name
                string shortName = "";
-               if(ZoneID < m_zoneNameShort.Count)
-                  shortName = m_zoneNameShort[ZoneID];    //grab the new zone name
+               if (ZoneID < m_zoneNameShort.Count)
+                   shortName = m_zoneNameShort[ZoneID];    //grab the new zone name
                if(shortName == "")
                   shortName = "Zone" + ZoneID.ToString(); //support unnamed zones, like the mog house
 
@@ -1020,7 +1023,7 @@ namespace mappy {
                   if (subparts.Length != 2)
                      continue;
 
-                  zoneid = System.Convert.ToByte(subparts[0], 16);
+                  zoneid = System.Convert.ToInt16(subparts[0], 16);
                   if(!int.TryParse(subparts[1], NumberStyles.Any, CultureInfo.InvariantCulture, out mapid))
                      continue;
 
