@@ -443,6 +443,7 @@ namespace mappy {
       public float RunSpeed2;
       public Int32 pListNode; //a pointer to the node this record belongs to in a resource linked list. note that the data in this list contains many things not just spawn data. further down the chain is unstable.
       public Int32 u19;
+      public Int32 m01; //March 2013 Update
       public Int32 NPCTalking;
       public float Distance;
       public Int32 u20;

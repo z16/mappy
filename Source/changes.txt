@@ -1,3 +1,9 @@
+0.1.42 (Ihm)
+* Updated following the March 13 update
+
+0.1.41 (Ihm)
+* Updated following the December 12 update
+
 0.1.40 (Ihm)
 * Updated Hunts to support the use of ID's (_Noob_)
 * Added support for displaying the players position (Winter)
