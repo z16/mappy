@@ -2,6 +2,9 @@
 *.slo
 *.lo
 *.o
+*.pdb
+*.exe
+*.manifest
 
 # Compiled Dynamic libraries
 *.so
@@ -17,3 +20,7 @@ Thumbs.db
 
 # Folder config file
 Desktop.ini
+
+obj/*
+
+*.user
