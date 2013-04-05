@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mappy", "mappy.csproj", "{E763C3EA-1323-41E6-A54D-5BB588C80FFD}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{DC3FF709-E466-4327-9EF2-EB914977479E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Offline Development|Any CPU = Offline Development|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E763C3EA-1323-41E6-A54D-5BB588C80FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E763C3EA-1323-41E6-A54D-5BB588C80FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E763C3EA-1323-41E6-A54D-5BB588C80FFD}.Offline Development|Any CPU.ActiveCfg = Offline Development|Any CPU
+		{E763C3EA-1323-41E6-A54D-5BB588C80FFD}.Offline Development|Any CPU.Build.0 = Offline Development|Any CPU
+		{E763C3EA-1323-41E6-A54D-5BB588C80FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E763C3EA-1323-41E6-A54D-5BB588C80FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC3FF709-E466-4327-9EF2-EB914977479E}.Debug|Any CPU.ActiveCfg = Debug
+		{DC3FF709-E466-4327-9EF2-EB914977479E}.Offline Development|Any CPU.ActiveCfg = Offline Development
+		{DC3FF709-E466-4327-9EF2-EB914977479E}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
