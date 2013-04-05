@@ -267,6 +267,7 @@ namespace mappy {
             MapEngine.ShowGridTicks = m_config.Get("ShowGridTicks", true);
             MapEngine.GridLineColor = Color.FromArgb(m_config.Get("GridLineColor", MapEngine.GridLineColor.ToArgb()));
             MapEngine.GridTickColor = Color.FromArgb(m_config.Get("GridTickColor", MapEngine.GridTickColor.ToArgb()));
+            MapEngine.ShowPlayerPosition = m_config.Get("ShowPlayerPosition", true);
             MapEngine.PlayerColor = Color.FromArgb(m_config.Get("PlayerColor", MapEngine.PlayerColor.ToArgb()));
             MapEngine.NPCColor = Color.FromArgb(m_config.Get("NPCColor", MapEngine.NPCColor.ToArgb()));
             MapEngine.MOBColor = Color.FromArgb(m_config.Get("MOBColor", MapEngine.MOBColor.ToArgb()));
@@ -461,9 +462,16 @@ namespace mappy {
             miSepSpawn.Visible = true;
             miSpawnAddAsHunt.Visible = true;
             miSpawnAddAsHunt.Text = string.Format(Program.GetLang("menu_add_ashunt"), m_contextspawn.Name);
+            miSpawnAddAsHuntId.Text = Program.GetLang("id");
+            miSpawnAddAsHuntName.Text = Program.GetLang("name");
+            miSpawnAddAsReplacement.Visible = true;
+            miSpawnAddAsReplacement.Text = string.Format(Program.GetLang("menu_add_asreplacement"), m_contextspawn.Name);
+            miSpawnAddAsReplacementId.Text = Program.GetLang("id");
+            miSpawnAddAsReplacementName.Text = Program.GetLang("name");
          } else {
             miSepSpawn.Visible = false;
             miSpawnAddAsHunt.Visible = false;
+            miSpawnAddAsReplacement.Visible = false;
          }
       }
 
@@ -538,10 +546,37 @@ namespace mappy {
          fEditHunts.BeginEdit(this);
       }
 
-      private void miSpawnAddAsHunt_Click(object sender, EventArgs e) {
-         if(m_contextspawn == null)
-            return;
-         MapEngine.Data.Hunts.Add(m_contextspawn.Name, true);
+      private void miEditReplacements_Click(object sender, EventArgs e)
+      {
+         fEditReplacements.BeginEdit(this);
+      }
+
+      private void miSpawnAddAsHuntId_Click(object sender, EventArgs e)
+      {
+          if (m_contextspawn == null)
+              return;
+          MapEngine.Data.Hunts.Add(m_contextspawn.ID.ToString("X"), true);
+      }
+
+      private void miSpawnAddAsHuntName_Click(object sender, EventArgs e)
+      {
+          if (m_contextspawn == null)
+              return;
+          MapEngine.Data.Hunts.Add(m_contextspawn.Name, true);
+      }
+
+      private void miSpawnAddAsReplacementId_Click(object sender, EventArgs e)
+      {
+          if (m_contextspawn == null)
+              return;
+          MapEngine.Data.Replacements.Add(m_contextspawn.ID.ToString("X"), m_contextspawn.Name, true);
+      }
+
+      private void miSpawnAddAsReplacementName_Click(object sender, EventArgs e)
+      {
+          if (m_contextspawn == null)
+              return;
+          MapEngine.Data.Replacements.Add(m_contextspawn.Name, m_contextspawn.Name, true);
       }
 
       private void miSaveMap_Click(object sender, EventArgs e) {

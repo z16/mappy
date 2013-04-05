@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="config_app_url" xml:space="preserve">
-    <value>http://ffxiswitchmon.sourceforge.net/mappy/</value>
+    <value>https://sourceforge.net/projects/ihmsffxi/</value>
   </data>
   <data name="config_mappack_url" xml:space="preserve">
     <value>http://forums.windower.net/topic/7563-map-pack-nov-2-and-mapini-dec-15/</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="credits" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\credits.rtf;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

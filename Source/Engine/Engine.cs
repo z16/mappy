@@ -37,6 +37,7 @@ namespace MapEngine {
       private float     m_zoom             = 1.0f;
       private float     m_ratio            = 1.0f;
       private Color     m_gridColorTick    = Color.FromArgb(225, 200, 75);
+      private bool      m_showPlayerPosition = true;
       private Font      m_gridFontTick     = SystemFonts.DefaultFont;
       private Color     m_gridColorLine    = Color.FromArgb(75, 200, 75);
       private int       m_gridResolution   = 100;
@@ -140,6 +141,7 @@ namespace MapEngine {
       private float           m_MapAltOpacity = 0.4f;
       private ColorMatrix     m_MapAltMatrix;
       private ImageAttributes m_MapAltAttr;
+      private PointF          m_LocInImage; /// IHM EDIT
 
       private const     int WM_NCHITTEST      = 0x0084;
       private const     int WM_MOUSEWHEEL     = 0x020A;
@@ -407,6 +409,21 @@ namespace MapEngine {
             if (Updated != null)
                Updated();
          }
+      }
+
+      [Category("Grid")]
+      [Description("Gets or sets whether the players position should be shown.")]
+      [DisplayName("Show Player Position")]
+      [DefaultValue(true)]
+      public bool ShowPlayerPosition
+      {
+          get { return m_showPlayerPosition; }
+          set
+          {
+              m_showPlayerPosition = value;
+              if (Updated != null)
+                  Updated();
+          }
       }
 
       [Category("Grid")]
@@ -1131,6 +1148,19 @@ namespace MapEngine {
          get { return m_ratio; }
       }
 
+      /// IHM EDIT
+      /// <summary>Gets or sets the current location in IMAGE coordinates.</summary>
+      [Browsable(false)]
+      [Description("Gets or sets the current location in IMAGE coordinates.")]
+      public PointF LocInImage
+      {
+          get { return m_LocInImage; }
+          set
+          {
+              m_LocInImage = value;
+          }
+      }
+
       //====================================================================================================
       // Methods
       //====================================================================================================
@@ -1192,6 +1222,7 @@ namespace MapEngine {
                DrawLines(surface);
             DrawLabels(surface);
             DrawSpawns(surface);
+            DrawLoc(surface); /// IHM EDIT
          } catch (Exception ex) {
             Debug.WriteLine("WARNING: Exception thrown during render: " + ex.Message);
          }
@@ -1433,6 +1464,27 @@ namespace MapEngine {
          }
 
          g.Restore(tState);
+      }
+
+      /// IHM EDIT
+      //render FFXI-style location.
+      private void DrawLoc(Graphics g)
+      {
+          if (ShowPlayerPosition)
+          {
+              char tlxc;
+              decimal tlx = (decimal)(m_LocInImage.X * 2 - 17) / 32;
+              decimal tly = (decimal)(m_LocInImage.Y * 2 - 17) / 32;
+              tlx = Decimal.Ceiling(tlx);
+              tly = Decimal.Ceiling(tly);
+              if (tlx < 1 || tlx > 15)
+                  tlxc = '?';
+              else
+                  tlxc = (char)(tlx + 64);
+
+              g.DrawString(String.Format("({0}-{1})", tlxc, tly), m_labelFont, bYOUFill, 10, 10);
+          }
+
       }
 
       //renders all valid spawn data to the buffer
@@ -1734,11 +1786,15 @@ namespace MapEngine {
 
                //build the output string using the custom template
                string output = m_infoTemplate;
-               output = rxInfoName.Replace(output, spawn.Name);
+               //output = rxInfoName.Replace(output, spawn.Name);
+               if(spawn.Replacement)
+                   output = rxInfoName.Replace(output, spawn.RepName);
+               else
+                   output = rxInfoName.Replace(output, spawn.Name);
                output = rxInfoHpp.Replace(output, spawn.HealthPercent.ToString());
                output = rxInfoDistance.Replace(output, spawn.Distance.ToString("0.##"));
                output = rxNewLine.Replace(output, "\n");
-               output = rxInfoID.Replace(output, spawn.ID.ToString());
+               output = rxInfoID.Replace(output, spawn.ID.ToString("X")); /// IHM EDIT
 
                //if debugging and a debug string is set on the spawn, then append it to the info text regardless of the template
                #if DEBUG

@@ -11,6 +11,7 @@ namespace MapEngine {
    public delegate void MapLineEvent(MapLine line);
    public delegate void MapLabelEvent(MapLabel label);
    public delegate void MapHuntEvent(MapHunt hunt);
+   public delegate void MapReplacementEvent(MapReplacement hunt);
 
    /// <summary>An engine component that drives all map related data.</summary>
    public class MapData : ICloneable {
@@ -37,6 +38,7 @@ namespace MapEngine {
       private List<MapLine>  m_lines;
       private List<MapLabel> m_labels;
       private MapHunts       m_hunts;
+      private MapReplacements m_replacements;
 
       public event GenericEvent DataChanged;
 
@@ -48,9 +50,11 @@ namespace MapEngine {
          m_lines = new List<MapLine>();
          m_labels = new List<MapLabel>();
          m_hunts = new MapHunts(this);
+         m_replacements = new MapReplacements(this);
          m_suspendDirty = false;
 
          m_hunts.Updated += new MapHuntEvent(m_hunts_Updated);
+         m_replacements.Updated += new MapReplacementEvent(m_replacements_Updated);
 
          Clear();
       }
@@ -81,6 +85,11 @@ namespace MapEngine {
       /// <summary>Gets the hunts for the current zone.</summary>
       public MapHunts Hunts {
          get { return m_hunts; }
+      }
+      /// <summary>Gets the replacements for the current zone.</summary>
+      public MapReplacements Replacements
+      {
+          get { return m_replacements; }
       }
       /// <summary>Gets or sets the current zone name.</summary>
       public string ZoneName {
@@ -140,6 +149,7 @@ namespace MapEngine {
          m_lines.Clear();
          m_labels.Clear();
          m_hunts.Clear();
+         m_replacements.Clear();
          m_dirty = false;
       }
 
@@ -158,6 +168,7 @@ namespace MapEngine {
             copy.m_labels.Add(label);
 
          copy.m_hunts = m_hunts.Clone();
+         copy.m_replacements = m_replacements.Clone();
 
          return copy;
       }
@@ -185,6 +196,12 @@ namespace MapEngine {
       /// <summary>Adds a new regular expression as a hunt.</summary>
       public void AddHunt(string hunt, bool permanent) {
          m_hunts.Add(hunt, permanent);
+      }
+
+      /// <summary>Adds a new regular expression as a hunt.</summary>
+      public void AddReplacement(string regex, string replacement, bool permanent)
+      {
+          m_replacements.Add(regex, replacement, permanent);
       }
 
       /// <summary>Adds a label to the current map.</summary>
@@ -368,6 +385,10 @@ namespace MapEngine {
                   case 'H': //auto-hunt
                      m_hunts.Add(lineData, true);
                      break;
+                  case 'R': //auto-replacement
+                     parts = lineData.Split(',');
+                     m_replacements.Add(parts[0], parts[1], true);
+                     break;
                }
                linepos++;
             }
@@ -430,6 +451,13 @@ namespace MapEngine {
             foreach (KeyValuePair<string, MapHunt> pair in m_hunts) {
                if (pair.Value.Permanent)
                   writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "H {0}", pair.Value.ToString()));
+            }
+
+            //write each permanent replacement to the file
+            foreach (KeyValuePair<string, MapReplacement> pair in m_replacements)
+            {
+                if (pair.Value.Permanent)
+                    writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "R {0},{1}", pair.Value.ToString(), pair.Value.ReplacedName));
             }
 
             //close the writer
@@ -537,6 +565,17 @@ namespace MapEngine {
          }
          if (DataChanged != null)
             DataChanged();
+      }
+
+      private void m_replacements_Updated(MapReplacement rep)
+      {
+          if (rep.Permanent)
+          {
+              m_Empty = false;
+              Dirty = true;
+          }
+          if (DataChanged != null)
+              DataChanged();
       }
    }
 
@@ -905,6 +944,14 @@ namespace MapEngine {
       public MapHunt Add(string pattern, bool permanent) {
          if (pattern == "" || m_hunts.ContainsKey(pattern))
             return null;
+         try
+         {
+             Regex.Match("", pattern);
+         }
+         catch (ArgumentException)
+         {
+             return null;
+         }
          MapHunt hunt = new MapHunt(pattern, permanent);
          m_hunts.Add(pattern, hunt);
          Bind(hunt);
@@ -1005,7 +1052,24 @@ namespace MapEngine {
 
       /// <summary>Determines if the spawn matches this hunt.</summary>
       public bool isMatch(GameSpawn spawn) {
-         return m_regex.IsMatch(spawn.Name);
+         /// IHM EDIT
+         //if (spawn.Type == SpawnType.MOB || spawn.Type == SpawnType.Hidden)
+            //If regex is A-F see if it matches only the ID. Does anyone hunt a mob by name with only one letter?!
+            if (ToString() == "A" || ToString() == "B" || ToString() == "C" || ToString() == "D" ||
+            ToString() == "E" || ToString() == "F")
+                return m_regex.IsMatch(spawn.ID.ToString("X"));
+            //if not search both the name or the ID (if it is an hex number it will never match the name and the other way around)
+            else
+                return m_regex.IsMatch(spawn.Name) || m_regex.IsMatch(spawn.ID.ToString("X"));
+         /*else
+            //If not a MOB or hidden spawn don't search based on A-F
+            if (ToString() == "A" || ToString() == "B" || ToString() == "C" || ToString() == "D" ||
+            ToString() == "E" || ToString() == "F")
+                return false;
+            //search players and NPCs based on name
+            else
+                return m_regex.IsMatch(spawn.Name);*/
+         //return m_regex.IsMatch(spawn.Name);
       }
 
       /// <summary>Gets or sets whether the hunt will be saved with the map data.</summary>
@@ -1015,7 +1079,204 @@ namespace MapEngine {
 
       /// <summary>Returns the regular expression pattern defined for this hunt.</summary>
       public override string ToString() {
-         return m_regex.ToString();
+          return m_regex.ToString();
       }
+   }
+
+
+   /// <summary>Defines a collection of regular expressions that are used to match against spawn names.</summary>
+   public class MapReplacements : ICloneable
+   {
+       private Dictionary<string, MapReplacement> m_replacements;
+       private MapData m_data;
+
+       public event MapReplacementEvent Updated;
+       public event GenericEvent DataChanged;
+
+       public MapReplacements(MapData Data)
+       {
+           m_replacements = new Dictionary<string, MapReplacement>();
+           m_data = Data;
+       }
+
+       /// <summary>Adds the pattern as a hunt.</summary>
+       /// <param name="pattern">A regular expression to compare against the spawn name.</param>
+       /// <param name="permanent">Determines if the hunt will be saved with the map data.</param>
+       public MapReplacement Add(string pattern, string replacement, bool permanent)
+       {
+           if (pattern == "" || m_replacements.ContainsKey(pattern))
+               return null;
+           try
+           {
+               Regex.Match("", pattern);
+           }
+           catch (ArgumentException)
+           {
+               return null;
+           }
+           MapReplacement rep = new MapReplacement(pattern, replacement, permanent);
+           m_replacements.Add(pattern, rep);
+           Bind(rep);
+
+           if (Updated != null)
+               Updated(rep);
+           if (DataChanged != null)
+               DataChanged();
+
+           return rep;
+       }
+
+       /// <summary>Removes the hunt from the list.</summary>
+       public void Remove(MapReplacement replacement)
+       {
+           Remove(replacement.Replacement.ToString());
+       }
+       /// <summary>Removes the pattern from the hunt list.</summary>
+       public void Remove(string pattern)
+       {
+           if (m_replacements.ContainsKey(pattern))
+           {
+               MapReplacement rep = m_replacements[pattern];
+               m_replacements.Remove(pattern);
+               BindReset();
+               if (Updated != null)
+                   Updated(rep);
+               if (DataChanged != null)
+                   DataChanged();
+           }
+       }
+
+       public Dictionary<string, MapReplacement>.Enumerator GetEnumerator()
+       {
+           return m_replacements.GetEnumerator();
+       }
+
+       /// <summary>Forcefully re-evaluates each spawn to determine its hunt status.</summary>
+       public void BindReset()
+       {
+           foreach (KeyValuePair<uint, GameSpawn> pair in m_data.Engine.Game.Spawns) {
+               pair.Value.Replacement = isReplacement(pair.Value);
+           }
+       }
+
+       /// <summary>Bind the hunt to the spawn collection. Additive only.</summary>
+       public void Bind(MapReplacement replacement)
+       {
+           foreach (KeyValuePair<uint, GameSpawn> pair in m_data.Engine.Game.Spawns)
+           {
+               if (replacement.isMatch(pair.Value))
+               {
+                   pair.Value.Replacement = true;
+                   pair.Value.RepName = replacement.ReplacedName;
+               }
+           }
+       }
+
+       /// <summary>Bind the spawn to the hunt collection. Additive only.</summary>
+       public void Bind(GameSpawn spawn)
+       {
+           spawn.Replacement = isReplacement(spawn);
+       }
+
+       /// <summary>Determine if ANY hunt applies to the specified spawn.</summary>
+       public bool isReplacement(GameSpawn spawn)
+       {
+           foreach (KeyValuePair<string, MapReplacement> pair in m_replacements)
+           {
+               if (pair.Value.isMatch(spawn))
+               {
+                   spawn.RepName = pair.Value.ReplacedName;
+                   return true;
+               }
+           }
+           spawn.RepName = "";
+           return false;
+       }
+
+       /// <summary>Clears all hunts from the collection.</summary>
+       public void Clear()
+       {
+           m_replacements.Clear();
+           if (DataChanged != null)
+               DataChanged();
+       }
+
+       /// <summary>Creates a deep copy of the hunt data.</summary>
+       public MapReplacements Clone()
+       {
+           MapReplacements copy = (MapReplacements)((ICloneable)this).Clone(); //Create shallow copy
+           copy.m_replacements = new Dictionary<string, MapReplacement>();
+           foreach (KeyValuePair<string, MapReplacement> pair in m_replacements)
+           {
+               copy.m_replacements.Add(pair.Key, pair.Value);
+           }
+           return copy;
+       }
+       object ICloneable.Clone()
+       {
+           return this.MemberwiseClone();
+       }
+   }
+
+   /// <summary>Defines a regular expression used to bind to spawn based on its name.</summary>
+   public class MapReplacement
+   {
+       private Regex m_regex;
+       private string m_replacement;
+       private bool m_permanent;
+
+       public MapReplacement(string pattern, string replacement, bool permanent)
+       {
+           m_regex = new Regex(pattern);
+           m_replacement = replacement;
+           m_permanent = permanent;
+       }
+
+       /// <summary>Gets the regular expression object for this hunt.</summary>
+       public Regex Replacement
+       {
+           get { return m_regex; }
+       }
+
+       /// <summary>Determines if the spawn matches this hunt.</summary>
+       public bool isMatch(GameSpawn spawn)
+       {
+           /// IHM EDIT
+           //if (spawn.Type == SpawnType.MOB || spawn.Type == SpawnType.Hidden)
+               //If regex is A-F see if it matches only the ID. Does anyone hunt a mob by name with only one letter?!
+               if (ToString() == "A" || ToString() == "B" || ToString() == "C" || ToString() == "D" ||
+               ToString() == "E" || ToString() == "F")
+                   return m_regex.IsMatch(spawn.ID.ToString("X"));
+               //if not search both the name or the ID (if it is an hex number it will never match the name and the other way around)
+               else
+                   return m_regex.IsMatch(spawn.Name) || m_regex.IsMatch(spawn.ID.ToString("X"));
+           /*else
+               //If not a MOB or hidden spawn don't search based on A-F
+               if (ToString() == "A" || ToString() == "B" || ToString() == "C" || ToString() == "D" ||
+               ToString() == "E" || ToString() == "F")
+                   return false;
+               //search players and NPCs based on name
+               else
+                   return m_regex.IsMatch(spawn.Name);*/
+           //return m_regex.IsMatch(spawn.Name);
+       }
+
+       /// <summary>Gets or sets whether the hunt will be saved with the map data.</summary>
+       public string ReplacedName
+       {
+           get { return m_replacement; }
+       }
+
+       /// <summary>Gets or sets whether the hunt will be saved with the map data.</summary>
+       public bool Permanent
+       {
+           get { return m_permanent; }
+       }
+
+       /// <summary>Returns the regular expression pattern defined for this hunt.</summary>
+       public override string ToString()
+       {
+           return m_regex.ToString();
+       }
    }
 }

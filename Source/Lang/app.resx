@@ -303,7 +303,8 @@ Use the following tokens to customize the display:
 {name} : the spawn name
 {hpp} : the current health percent
 {distance} : how far the spawn is from the players location
-{br} : a line break</value>
+{br} : a line break
+{id}: the id of the spawn</value>
   </data>
   <data name="config_map_mappackpath" xml:space="preserve">
     <value>Map pack image path</value>
@@ -318,10 +319,7 @@ Use the following tokens to customize the display:
     <value>Preferences</value>
   </data>
   <data name="menu_add_ashunt" xml:space="preserve">
-    <value>Add {0} As New Hunt</value>
-  </data>
-  <data name="menu_center_view" xml:space="preserve">
-    <value>Center View</value>
+    <value>Add {0} As New Hunt by...</value>
   </data>
   <data name="menu_edit_hunts" xml:space="preserve">
     <value>Edit Hunts...</value>
@@ -694,5 +692,26 @@ Do you really want to overwrite the current ini file?</value>
   </data>
   <data name="msg_iniclobber_title" xml:space="preserve">
     <value>Overwrite?</value>
+  </data>
+  <data name="menu_add_asreplacement" xml:space="preserve">
+    <value>Add {0} As Mob to Replace by...</value>
+  </data>
+  <data name="menu_edit_replacements" xml:space="preserve">
+    <value>Edit Replacements...</value>
+  </data>
+  <data name="id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="menu_center_view" xml:space="preserve">
+    <value>Center View</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="config_appear_player_position_color" xml:space="preserve">
+    <value>Player position color</value>
+  </data>
+  <data name="config_appear_show_player_position" xml:space="preserve">
+    <value>Show the player position</value>
   </data>
 </root>

@@ -22,7 +22,7 @@ namespace mappy {
       public static readonly string DEFAULT_SIG_ZONE_SHORT  = "5f5ec38b0cf5";
       public static readonly string DEFAULT_SIG_SPAWN_START = "<<8b3e3bfb74128bcfe8";
       public static readonly string DEFAULT_SIG_SPAWN_END   = "891e83c60481fe";
-      public static readonly string DEFAULT_SIG_MY_ID       = "8b8ea000000051b9";
+      public static readonly string DEFAULT_SIG_MY_ID       = "8B8EA800000051B9";
       public static readonly string DEFAULT_SIG_MY_TARGET   = "8946188b0d????????85c9";
       //public static readonly string DEFAULT_SIG_MY_TARGET = "3ac3a1????????8a4838"; //target was the only one to break last patch. including this backup just in case it happens again.
 
@@ -310,6 +310,7 @@ namespace mappy {
                   if(!engine.Game.Spawns.ContainsID(i)) {
                      //create the spawn and add it to the game data
                      FFXISpawn spawn = new FFXISpawn(i, (IntPtr)spawnList[i], this);
+
                      engine.Game.Spawns.Add(spawn);
 
                      //spawn.DEBUGHOVER = "pointer: " + spawnList[i].ToString("X") + " index: " + i;
@@ -342,6 +343,10 @@ namespace mappy {
 
                //only process if there is a map to display
                if(curMap != null) {
+                  /// IHM EDIT
+                  //Send the location in image coordinates to the engine. (I don't like doing it this way.)
+                  engine.LocInImage = curMap.Translate(engine.Game.Player.Location); 
+
                   //only process if the map has actually changed
                   if(curMap.MapID != lastMapID) {
                      engine.MapAlternativeImage = curMap.GetImage(); //set the background image
@@ -431,6 +436,8 @@ namespace mappy {
       public UInt32 ServerID;
       [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 24)]
       public string DisplayName; //player is 16 max, but npc's can be up to 24.
+      public Int32 d01; //December 2012 Update
+      public Int32 d02; //December 2012 Update
       public Int32 pUnknown;
       public float RunSpeed;
       public float RunSpeed2;
@@ -510,7 +517,7 @@ namespace mappy {
       public Int32 u43;
       public Int32 u44;
       public Int32 u45;
-      public Int32 u46;
+      //public Int32 u46;
       public UInt32 ClaimID; //the SERVER id of the player that has claim on the mob. the claim will bounce around to whomever has the most hate. not exactly the same as /assist but it will have to do.
       public Int32 u47;
       [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]

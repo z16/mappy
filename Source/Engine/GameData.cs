@@ -156,6 +156,7 @@ namespace MapEngine {
          if (!m_spawns.ContainsKey(spawn.ID)) {
             m_spawns.Add(spawn.ID, spawn);
             m_data.Engine.Data.Hunts.Bind(spawn);
+            m_data.Engine.Data.Replacements.Bind(spawn);
          }
       }
 
@@ -230,6 +231,8 @@ namespace MapEngine {
       private bool      m_hidden      = true;
       private bool      m_alert       = false;
       private bool      m_hunt        = false;
+      private bool      m_replacement = false;
+      private string    m_repName     = "";
       private Image     m_icon        = null;
       private Color     m_colorFill   = Color.Black;
       private uint      m_claimID     = 0;
@@ -288,6 +291,16 @@ namespace MapEngine {
       public bool Hunt {
          get { return m_hunt; }
          set { m_hunt = value; }
+      }
+      public bool Replacement
+      {
+          get { return m_replacement; }
+          set { m_replacement = value; }
+      }
+      public string RepName
+      {
+          get { return m_repName; }
+          set { m_repName = value; }
       }
       public bool Hidden {
          get { return m_hidden; }

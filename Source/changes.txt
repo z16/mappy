@@ -1,3 +1,13 @@
+0.1.40 (Ihm)
+* Updated Hunts to support the use of ID's (_Noob_)
+* Added support for displaying the players position (Winter)
+* Updated config screen Spawn Information Template to show {id}
+* Added new config for displaying players position
+* Added Hunt by Id and Name to the right click menu for a selected mob
+* Added new Replacement system to replace mobs names via Id or Name
+* Fixed smalll bug with hunts on ???, currently can't search for it as it causes Regex issues
+* Added a temporary new icon
+
 0.1.35
 * updated SIG_ZONE_ID (h1pp0) 
 * fixed: wrong config pool for manually configured signatures (profile vs global)
