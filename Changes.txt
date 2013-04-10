@@ -1,13 +1,17 @@
-0.1.43 (Ihm)
+0.1.44
+* Changed Icon to match the exe icon
+* Will no longer require "Run as admin"
+
+0.1.43
 * Fixed support for Adoulin zones
 
-0.1.42 (Ihm)
+0.1.42
 * Updated following the March 13 update
 
-0.1.41 (Ihm)
+0.1.41
 * Updated following the December 12 update
 
-0.1.40 (Ihm)
+0.1.40
 * Updated Hunts to support the use of ID's (_Noob_)
 * Added support for displaying the players position (Winter)
 * Updated config screen Spawn Information Template to show {id}

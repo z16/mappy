@@ -439,11 +439,11 @@ namespace mappy {
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pictureBox1.Image = global::mappy.Properties.Resources.logo;
+            this.pictureBox1.Image = global::mappy.Properties.Resources.Mappy;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(45, 51);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
             // 
@@ -1294,9 +1294,9 @@ namespace mappy {
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 13F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(341, 952);
             this.tableLayoutPanel4.TabIndex = 2;
@@ -2282,9 +2282,9 @@ namespace mappy {
             this.chkShowPetLines.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.chkShowPetLines.AutoEllipsis = true;
             this.tableLayoutPanel4.SetColumnSpan(this.chkShowPetLines, 2);
-            this.chkShowPetLines.Location = new System.Drawing.Point(3, 895);
+            this.chkShowPetLines.Location = new System.Drawing.Point(3, 896);
             this.chkShowPetLines.Name = "chkShowPetLines";
-            this.chkShowPetLines.Size = new System.Drawing.Size(335, 14);
+            this.chkShowPetLines.Size = new System.Drawing.Size(335, 17);
             this.chkShowPetLines.TabIndex = 38;
             this.chkShowPetLines.Text = "{config_appear_show_pet_lines}";
             this.chkShowPetLines.UseVisualStyleBackColor = true;
@@ -2294,7 +2294,7 @@ namespace mappy {
             // 
             this.lblPetLineColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPetLineColor.AutoSize = true;
-            this.lblPetLineColor.Location = new System.Drawing.Point(3, 915);
+            this.lblPetLineColor.Location = new System.Drawing.Point(3, 921);
             this.lblPetLineColor.Name = "lblPetLineColor";
             this.lblPetLineColor.Size = new System.Drawing.Size(279, 13);
             this.lblPetLineColor.TabIndex = 22;
@@ -2304,7 +2304,7 @@ namespace mappy {
             // 
             this.cmdPetLineColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdPetLineColor.BackColor = System.Drawing.Color.Black;
-            this.cmdPetLineColor.Location = new System.Drawing.Point(286, 913);
+            this.cmdPetLineColor.Location = new System.Drawing.Point(286, 919);
             this.cmdPetLineColor.Margin = new System.Windows.Forms.Padding(1);
             this.cmdPetLineColor.Name = "cmdPetLineColor";
             this.cmdPetLineColor.Size = new System.Drawing.Size(54, 18);

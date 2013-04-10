@@ -89,7 +89,7 @@ namespace mappy {
          miActiveSnapRange.Click += new EventHandler(miActiveSnapRange_Click);
          miAbout.Click += new EventHandler(miAbout_Click);
          miOptions.Click += new EventHandler(miOptions_Click);
-         SetIcon(MapRes.StatusGM);
+         SetIcon(MapRes.MappyIcon);
 
          RefreshInstances();
 

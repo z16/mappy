@@ -4,7 +4,6 @@
 *.o
 *.pdb
 *.exe
-*.manifest
 
 # Compiled Dynamic libraries
 *.so
