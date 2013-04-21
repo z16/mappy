@@ -70,6 +70,8 @@
          this.miSep3 = new System.Windows.Forms.ToolStripSeparator();
          this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
          this.miTrayExit = new System.Windows.Forms.ToolStripMenuItem();
+         this.miSaveDefault = new System.Windows.Forms.ToolStripMenuItem();
+         this.miClearDefault = new System.Windows.Forms.ToolStripMenuItem();
          this.TrayMenu.SuspendLayout();
          // 
          // TrayIcon
@@ -97,13 +99,15 @@
             this.miSep5,
             this.miInstance,
             this.miRefresh,
+            this.miSaveDefault,
+            this.miClearDefault,
             this.miSep1,
             this.miOptions,
             this.miSep3,
             this.miAbout,
             this.miTrayExit});
          this.TrayMenu.Name = "TrayMenu";
-         this.TrayMenu.Size = new System.Drawing.Size(214, 391);
+         this.TrayMenu.Size = new System.Drawing.Size(214, 435);
          // 
          // miActiveOnTop
          // 
@@ -238,6 +242,18 @@
          this.miTrayExit.Name = "miTrayExit";
          this.miTrayExit.Size = new System.Drawing.Size(213, 22);
          this.miTrayExit.Text = "Exit";
+         // 
+         // miSaveDefault
+         // 
+         this.miSaveDefault.Name = "miSaveDefault";
+         this.miSaveDefault.Size = new System.Drawing.Size(213, 22);
+         this.miSaveDefault.Text = "Set as Default";
+         // 
+         // miClearDefault
+         // 
+         this.miClearDefault.Name = "miClearDefault";
+         this.miClearDefault.Size = new System.Drawing.Size(213, 22);
+         this.miClearDefault.Text = "Clear Default";
          this.TrayMenu.ResumeLayout(false);
 
       }
@@ -267,5 +283,7 @@
       private System.Windows.Forms.ToolStripMenuItem miActiveSnapRange;
       private System.Windows.Forms.ToolStripSeparator miSep5;
       private System.Windows.Forms.ToolStripMenuItem miActiveShowMapImage;
+      private System.Windows.Forms.ToolStripMenuItem miSaveDefault;
+      private System.Windows.Forms.ToolStripMenuItem miClearDefault;
    }
 }

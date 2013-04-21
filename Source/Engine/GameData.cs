@@ -360,31 +360,4 @@ namespace MapEngine {
       //prototype for derived classes
       public virtual void Update() { }
    }
-
-#if OFFLINE
-   /// <summary>FakeSpawn is an offline development helper to quickly stamp out spawns to render.</summary>
-   public class FakeSpawn : GameSpawn {
-      GameSpawn fp;
-
-      public FakeSpawn(uint ID, string Name, SpawnType Type, MapPoint Location) : this(ID, Name, Type, Location, false, null) { }
-      public FakeSpawn(uint ID, string Name, SpawnType Type, MapPoint Location, bool Hidden) : this(ID, Name, Type, Location, Hidden, null) { }
-      public FakeSpawn(uint ID, string Name, SpawnType Type, MapPoint Location, bool Hidden, GameSpawn fakeplayer) {
-         base.ID = ID;
-         base.Name = Name;
-         base.Type = Type;
-         base.setLocation(Location.X, Location.Y, Location.Z);
-         base.Hidden = Hidden;
-         fp = fakeplayer;
-         Update();
-      }
-      new public void setLocation(float x, float y, float z) {
-         base.setLocation(x, y, z);
-      }
-
-      override public void Update() {
-         if (fp != null)
-            base.Distance = (float)this.Location.calcDist2D(fp.Location);
-      }
-   }
-#endif
 }

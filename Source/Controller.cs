@@ -76,6 +76,8 @@ namespace mappy {
          miTrayExit.Click += new EventHandler(miTrayExit_Click);
          miInstance.SelectedIndexChanged += new EventHandler(miInstance_SelectedIndexChanged);
          miRefresh.Click += new EventHandler(miRefresh_Click);
+         miSaveDefault.Click += new EventHandler(miSaveDefault_Click);
+         miClearDefault.Click += new EventHandler(miClearDefault_Click);
          miActiveOnTop.CheckedChanged += new EventHandler(miActiveOnTop_CheckedChanged);
          miActiveClickthru.CheckedChanged += new EventHandler(miActiveClickthru_CheckedChanged);
          miActiveResizable.CheckedChanged += new EventHandler(miActiveResizable_CheckedChanged);
@@ -228,8 +230,25 @@ namespace mappy {
 
          if (m_gamelist.Count == 0) {
             ShowBalloonTip(1500, Program.GetLang("bubble_warn_nogames_title"), Program.GetLang("bubble_warn_nogames_text"), ToolTipIcon.Warning);
+            string defInstance = m_config.Get("DefaultInstance", "");
+            miSaveDefault.Enabled = false;
+            if (defInstance == "")
+               miClearDefault.Enabled = false;
          } else if (miInstance.SelectedIndex < 0) {
-            miInstance.SelectedIndex = 0;
+            miSaveDefault.Enabled = true;
+            bool found = false;
+            string defInstance = m_config.Get("DefaultInstance", "");
+            if (defInstance == "")
+               miClearDefault.Enabled = false;
+            foreach (ProcessItem item in miInstance.Items) {
+               if (item.ToString() == m_config.Get("DefaultInstance", "")) {
+                  found = true;
+                  miInstance.SelectedItem = item;
+                  break;
+               }
+            }
+            if(!found)
+               miInstance.SelectedIndex = 0;
          }
          miInstance.Enabled = (m_gamelist.Count > 0);
       }
@@ -475,6 +494,18 @@ namespace mappy {
          LoadProcess(item.process);
       }
 
+      private void miSaveDefault_Click(object sender, EventArgs e) {
+         if (miInstance.SelectedItem != null) {
+            m_config["DefaultInstance"] = miInstance.SelectedItem.ToString();
+            miClearDefault.Enabled = true;
+         }
+      }
+
+      void miClearDefault_Click(object sender, EventArgs e) {
+         m_config["DefaultInstance"] = "";
+         miClearDefault.Enabled = false;
+      }
+
       private void TrayIcon_MouseDoubleClick(object sender, MouseEventArgs e) {
          if (e.Button == MouseButtons.Left && m_window != null && !m_window.IsDisposed)
             m_window.Activate();
@@ -522,18 +553,14 @@ namespace mappy {
          //Close the active map window, which is also responsible for saving profile changes to the config
          if (m_window != null && !m_window.IsDisposed)
             m_window.Close();
-
+            
          //Deallocate objects and kill the app
          TrayIcon.Dispose();
          Application.Exit();
       }
 
       public GameInstance CreateInstance(Process process, fMap window) {
-#if OFFLINE
-         return new FFXIOfflineGameInstance(window.Engine, window.MapPackPath);
-#else
-         return new FFXIGameInstance(process, window.Engine, m_config, window.MapPackPath, Program.ModuleName);
-#endif
+      return new FFXIGameInstance(process, window.Engine, m_config, window.MapPackPath, Program.ModuleName);
       }
 
       public MapEditors Editors {

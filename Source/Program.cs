@@ -14,13 +14,8 @@ namespace mappy {
       public static readonly string MapIniFile = "map.ini";
       public static readonly string MapFileExt = ".png|.gif";
 
-      #if OFFLINE
-         public static readonly string ProcessName = "notepad";
-         public static readonly string ModuleName = "notepad.exe";
-      #else
-         public static readonly string ProcessName = "pol";
-         public static readonly string ModuleName = "FFXiMain.dll";
-      #endif
+      public static readonly string ProcessName = "pol";
+      public static readonly string ModuleName = "FFXiMain.dll";
 
       /// <summary>
       /// The main entry point for the application.

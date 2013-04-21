@@ -1,6 +1,7 @@
 0.1.44
 * Changed Icon to match the exe icon
 * Will no longer require "Run as admin"
+* Added a setting for default instance
 
 0.1.43
 * Fixed support for Adoulin zones
