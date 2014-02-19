@@ -1508,9 +1508,9 @@ namespace MapEngine {
          foreach (KeyValuePair<uint, GameSpawn> pair in m_game.Spawns) {
             GameSpawn spawn = pair.Value;
             if(!spawn.Hidden || m_showHiddenSpawn) {
-               if(m_drawPetLines && spawn.PetID > 0 && m_game.Spawns.ContainsID(spawn.PetID)) {
+               if(m_drawPetLines && spawn.PetIndex > 0 && m_game.Spawns.ContainsIndex(spawn.PetIndex)) {
                   //draw the line with an arrowhead to the thing
-                  GameSpawn pet = m_game.Spawns[spawn.PetID];
+                  GameSpawn pet = m_game.Spawns[spawn.PetIndex];
                   float headX = CalcClientCoordX(pet.Location.X);
                   float headY = CalcClientCoordY(pet.Location.Y);
                   float tailX = CalcClientCoordX(spawn.Location.X);
@@ -1542,7 +1542,7 @@ namespace MapEngine {
                   g.DrawLine(pPetChain, headX - offX, headY - offY, tailX, tailY);
                   DrawArrowHead(g, pPetChain, headX - offX, headY - offY, rads, 10f, 5f);
                }
-               if(m_drawClaimLines && spawn.ClaimID > 0 && m_game.Spawns.ContainsID(spawn.ClaimID)) {
+               if(m_drawClaimLines && spawn.ClaimID > 0 && m_game.Spawns.ContainsIndex(spawn.ClaimID)) {
                   GameSpawn claimee = m_game.Spawns[spawn.ClaimID];
                   g.DrawLine(pClaimChain,
                      CalcClientCoordX(claimee.Location.X),
@@ -1552,7 +1552,7 @@ namespace MapEngine {
                   );
                }
                if (m_drawHuntLines && spawn.Hunt && m_game.Player != null) {
-                  g.DrawLine(spawn.isAttackable ? pHuntChain : pHuntLockedChain,
+                  g.DrawLine(spawn.Attackable ? pHuntChain : pHuntLockedChain,
                      CalcClientCoordX(m_game.Player.Location.X),
                      CalcClientCoordY(m_game.Player.Location.Y),
                      CalcClientCoordX(spawn.Location.X),
@@ -1681,7 +1681,7 @@ namespace MapEngine {
                
                if (STH)
                   size += m_spawnSelectSize;
-               if (spawn.isRaidMember || spawn.isGroupMember)
+               if (spawn.RaidMember || spawn.GroupMember)
                   size += m_spawnMemberSize;
                if (spawn.Alert)
                   size += m_alertSize;
@@ -1709,9 +1709,9 @@ namespace MapEngine {
                      //alter the border to reflect various player states
                      if (STHP)
                         pCacheSpawnBorder.Color = pSelected.Color;
-                     else if (spawn.isGroupMember)
+                     else if (spawn.GroupMember)
                         pCacheSpawnBorder.Color = m_GroupMemColor;
-                     else if (spawn.isRaidMember)
+                     else if (spawn.RaidMember)
                         pCacheSpawnBorder.Color = m_RaidMemColor;
                      else
                         pCacheSpawnBorder.Color = pCachePlayer.Color; //prevent fuzzy edges

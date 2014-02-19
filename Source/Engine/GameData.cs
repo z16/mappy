@@ -76,7 +76,7 @@ namespace MapEngine
         {
             if (Player != null && Player.ID == ID)
                 return;
-            if (Spawns.ContainsID(ID))
+            if (Spawns.ContainsIndex(ID))
                 Player = Spawns[ID];
             if (!batch && Updated != null)
                 Updated();
@@ -96,7 +96,7 @@ namespace MapEngine
             {
                 Target = null;
             }
-            else if (Spawns.ContainsID(ID))
+            else if (Spawns.ContainsIndex(ID))
             {
                 Target = Spawns[ID];
             }
@@ -125,7 +125,7 @@ namespace MapEngine
         }
 
         /// <summary>Determines if a spawn exists in the collection with the given ID.</summary>
-        public bool ContainsID(uint ID)
+        public bool ContainsIndex(uint ID)
         {
             return Spawns.ContainsKey(ID);
         }
@@ -244,12 +244,13 @@ namespace MapEngine
             Icon = null;
             FillColor = Color.Black;
             ClaimID = 0;
-            PetID = 0;
-            isGroupMember = false;
-            isRaidMember = false;
+            PetIndex = 0;
+            FellowIndex = 0;
+            GroupMember = false;
+            RaidMember = false;
             DEBUG = "";
             DEBUGHOVER = "";
-            isAttackable = false;
+            Attackable = false;
             this.ID = ID;
             Location = new MapPoint();
         }
@@ -272,10 +273,11 @@ namespace MapEngine
         public Image Icon { get; protected set; }
         public Color FillColor { get; protected set; }
         public uint ClaimID { get; set; }
-        public uint PetID { get; set; }
-        public bool isRaidMember { get; set; }
-        public bool isGroupMember { get; set; }
-        public bool isAttackable { get; protected set; }
+        public uint PetIndex { get; set; }
+        public uint FellowIndex { get; set; }
+        public bool RaidMember { get; set; }
+        public bool GroupMember { get; set; }
+        public bool Attackable { get; protected set; }
         public string DEBUG { get; set; }
         public string DEBUGHOVER { get; set; }
         //prototype for derived classes

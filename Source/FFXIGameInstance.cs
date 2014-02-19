@@ -310,7 +310,7 @@ namespace mappy {
             for(uint i = 0; i < listMax; i++) {
                if(spawnList[i] > 0) {
                   //only add new id's. each spawn is responsible for updating itself.
-                  if(!engine.Game.Spawns.ContainsID(i)) {
+                  if(!engine.Game.Spawns.ContainsIndex(i)) {
                      //create the spawn and add it to the game data
                      FFXISpawn spawn = new FFXISpawn(i, (IntPtr)spawnList[i], this);
 
@@ -439,11 +439,9 @@ namespace mappy {
       public UInt32 ServerID;
       [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 24)]
       public string DisplayName; //player is 16 max, but npc's can be up to 24.
-      public Int32 d01; //December 2012 Update
-      public Int32 d02; //December 2012 Update
       public Int32 pUnknown;
       public float RunSpeed;
-      public float RunSpeed2;
+      public float AnimationSpeed;
       public Int32 pListNode; //a pointer to the node this record belongs to in a resource linked list. note that the data in this list contains many things not just spawn data. further down the chain is unstable.
       public Int32 u19;
       public Int32 m01; //March 2013 Update
@@ -453,15 +451,17 @@ namespace mappy {
       public Int32 u21;
       public float Heading2;
       public Int32 pPetOwner; //only for permanent pets. charmed mobs do not fill this.
-      public Int32 u22;
+      public Int32 TP;
       public byte HealthPercent;
-      public byte u23;
+      public byte ManaPercent;
+      public byte u22;
       public byte ModelType;
       public byte Race;
-      public Int32 NPCPathingTime;
+      public byte u23;
+      public Int16 u24;
       public Int32 u25;
-      public Int32 u26;
-      public Int16 Model;
+      public Int64 u26;
+      public Int16 ModelFace;
       public Int16 ModelHead;
       public Int16 ModelBody;
       public Int16 ModelHands;
@@ -470,59 +470,43 @@ namespace mappy {
       public Int16 ModelMain;
       public Int16 ModelSub;
       public Int16 ModelRanged;
-      public Int32 u27;
+      public Int16 u27;
       public Int32 u28;
       public Int32 u29;
-      public Int16 u30;
+      public Int32 u30;
       public Int16 u31;
+      public byte u32;
       public byte u33;
-      public byte u34;
-      public Int32 u70; //Added Feb 14th 2011 Patch; Fixed by Jetsam
-      public byte FlagRender;
-      public byte Flags1; //I am well aware these should be combined,
-      public byte Flags2; //  but it is easier for future discoveries
-      public byte Flags3; //  as my documentation and memory dissect
-      public byte Flags4; //  structs have these separated (to spot
-      public byte Flags5; //  flag changes after performing an action).
-      public byte Flags6;
-      public byte Flags7; //  besides, I am not entirely sure where the
-      public byte Flags8; //  first flag boundary starts, and what lies
-      public byte Flags9; //  on a word boundary (and thus is padding).
-      public Int32 u71; //Added Jul 13th 2011 Patch; Fixed by Zer0Blues
-      public byte Flags10;
-      public byte Flags11;
-      public byte Flags12;
-      public byte Flags13;
-      public byte Flags14;
-      public byte Flags15;
-      public byte Flags16;
-      public byte Flags17;
-      public byte Flags18;
-      public byte Flags19;
-      public byte Flags20;
-      public byte u35;
-      public Int32 u36;
-      public Int32 u37;
+      public Int32 u34;
+      public int Flags1;
+      public int Flags2;
+      public int Flags3;
+      public int Flags4;
+      public int Flags5;
+      public int Flags6;
+      public Int32 u35;
+      public Int16 u36;
       public Int16 NPCSpeechLoop;
       public Int16 NPCSpeechFrame;
+      public Int16 u37;
       public Int32 u38;
       public Int32 u39;
-      public Int16 u40;
-      public float RunSpeed3;
+      public Int32 u40;
+      public float RunSpeed2;
       public Int16 NPCWalkPos1;
       public Int16 NPCWalkPos2;
       public Int16 NPCWalkMode;
       public Int16 u41;
       [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
       public string mou4; //always this. assuming an animation name
-      public UInt32 FlagsCombat;
-      public UInt32 FlagsCombatSVR; //im assuming this is updated after the client asks the server. there is a noticable delay between the two
+      public UInt32 Status;
+      public UInt32 StatusServer; //im assuming this is updated after the client asks the server. there is a noticable delay between the two
       public Int32 u42;
       public Int32 u43;
       public Int32 u44;
       public Int32 u45;
-      //public Int32 u46;
-      public UInt32 ClaimID; //the SERVER id of the player that has claim on the mob. the claim will bounce around to whomever has the most hate. not exactly the same as /assist but it will have to do.
+      public Int32 u46;
+      public UInt32 ClaimID; // The ID of the last person to perform an action on the mob
       public Int32 u47;
       [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
       public string Animation1;
@@ -546,37 +530,36 @@ namespace mappy {
       public Int16 AnimationStep; //guessed, but something to do with the current animation
       public Int16 u48;
       public Int16 u49;
-      public UInt32 EmoteID;
+      public UInt16 EmoteID;
+      public Int16 u50;
       [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
       public string EmoteName;
       public byte SpawnType;
-      public byte u50;
-      public Int16 u51;
+      public byte u51;
+      public Int16 u52;
       public byte LSColorRed;
       public byte LSColorGreen;
       public byte LSColorBlue;
-      public byte u52;
       public byte u53;
       public byte u54;
-      public byte CampaignMode; //boolean value. 
       public byte u55;
+      public byte CampaignMode; //boolean value. 
       public byte u56;
-      public byte u57;
-      public Int16 u58;
-      public Int16 u59;
-      public Int16 u60;
-      public Int16 u61;
-      public Int16 u62;
-      public Int16 u63;
-      public Int16 u64;
-      [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-      public string TalkAnimation;
-      public Int32 u65;
-      public Int32 u66;
-      public UInt32 PetID; //the zone id of the spawn considered this spawns pet.
-      public Int16 u67;
-      public byte u68;
-      public byte u69;
+      public byte FishingTimer;
+      public Int32 u59;
+      public Int32 u60;
+      public Int32 u61;
+      public Int32 u62;
+      public Int32 u63;
+      public Int32 u64;
+      public Int16 u65;
+      public UInt16 PetIndex;
+      public Int32 u68;
+      public Int32 u69;
+      public float ModelSize;
+      [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 148)]
+      public string u70;
+      public UInt16 FellowIndex;
    }
 
    public enum FFXISpawnType : byte {
@@ -759,13 +742,14 @@ namespace mappy {
             base.Hidden = false;
             base.Dead = false;
             base.InCombat = false;
-            base.isGroupMember = false;
-            base.isRaidMember = false;
+            base.GroupMember = false;
+            base.RaidMember = false;
             base.Name = info.DisplayName;
             base.Level = -1; //level is never known in FFXI
             base.Distance = 0;
-            base.PetID = info.PetID;
-            base.isAttackable = true;
+            base.PetIndex = info.PetIndex;
+            base.Attackable = true;
+            base.FellowIndex = info.FellowIndex;
 
             //calculate the distance between the player and this spawn.
             if (m_instance.Engine.Game.Player != null && m_instance.Engine.Game.Player != this)
@@ -804,24 +788,24 @@ namespace mappy {
 
             //set party/alliance flags
             if((info.SpawnType & (int)FFXISpawnType.GroupMember) != 0)
-               base.isGroupMember = true;
+               base.GroupMember = true;
             if((info.SpawnType & (int)FFXISpawnType.AllianceMember) != 0)
-               base.isRaidMember = true;
+               base.RaidMember = true;
 
             //set combat/visibility modes
-            if((info.FlagRender & (int)FFXIRenderFlags.Hidden) != 0)
+            if((info.Flags1 & (int)FFXIRenderFlags.Hidden) != 0)
                base.Hidden = true;
-            if((info.FlagsCombat & (int)FFXICombatFlags.Dead) != 0 && info.FlagsCombat < 4) //prevent sit and heal messing with us
+            if((info.Status & (int)FFXICombatFlags.Dead) != 0 && info.Status < 4) //prevent sit and heal messing with us
                base.Dead = true;
-            if((info.FlagsCombat & (int)FFXICombatFlags.InCombat) != 0 && info.FlagsCombat < 4) //prevent sit and heal messing with us
+            if((info.Status & (int)FFXICombatFlags.InCombat) != 0 && info.Status < 4) //prevent sit and heal messing with us
                base.InCombat = true;
 
-            base.isAttackable = base.Type == SpawnType.MOB && !base.Dead && info.ClaimID > 0 && (info.Flags14 & (int)FFXISpawnFlags14.Attackable) != 0;
+            base.Attackable = base.Type == SpawnType.MOB && !base.Dead && info.ClaimID > 0 && (info.Flags5 & ((int)FFXISpawnFlags14.Attackable << 16)) != 0;
 
             //set icon if any of these situations are met
             if(base.Type == SpawnType.MOB && base.InCombat && !base.Dead) {
                if(info.ClaimID > 0) {
-                  if((info.Flags14 & (int)FFXISpawnFlags14.Attackable) != 0) {
+                  if((info.Flags5 & ((int)FFXISpawnFlags14.Attackable << 16)) != 0) {
                      base.Icon = MapRes.StatusBattleTarget;
                   } else {
                      base.Icon = MapRes.StatusClaimed;
@@ -835,11 +819,11 @@ namespace mappy {
                base.Icon = MapRes.StatusDead;
             } else if(base.Alert) {
                base.Icon = MapRes.StatusAlert;
-            } else if((info.Flags8 & (int)FFXISpawnFlags8.GM) != 0) {
+            } else if((info.Flags2 & (int)FFXISpawnFlags8.GM) != 0) {
                base.Icon = MapRes.StatusGM;
             } else if(base.Type == SpawnType.MOB && info.CampaignMode > 0) {
                base.Icon = MapRes.StatusCampaign;
-            } else if((info.Flags7 & (int)FFXISpawnFlags7.InvisEffectSVR) != 0) {
+            } else if((info.Flags1 & ((int)FFXISpawnFlags7.InvisEffectSVR << 24)) != 0) {
                base.Icon = MapRes.StatusInvisible;
             } else {
                base.Icon = null;
