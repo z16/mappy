@@ -527,7 +527,7 @@ namespace mappy
         public Int16 u31;
         public byte u32;
         public byte u33;
-        public Int32 u34;
+        //public Int32 u34;  --Does not exist--
         public int Flags1;
         public int Flags2;
         public int Flags3;
@@ -584,9 +584,10 @@ namespace mappy
         public Int16 u50;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
         public string EmoteName;
-        public byte SpawnType;
-        public byte u51;
-        public Int16 u52;
+        //public byte SpawnType;
+        public int SpawnType; // --SPawntype changed to 32-bit int--
+        //public byte u51;
+        //public Int16 u52;
         public byte LSColorRed;
         public byte LSColorGreen;
         public byte LSColorBlue;
