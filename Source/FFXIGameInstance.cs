@@ -455,163 +455,163 @@ namespace mappy
         }
     }
 
-	//Biggest. Struct. Ever.
-	[StructLayout(LayoutKind.Sequential, Pack = 1)] //im sure some of these fields could be removed with the proper packing. but im lazy.
-	public struct SpawnInfo
-	{
-		public UInt32 EntityVTablePtr;		// CYyObject
-		public float locX;					// Client side positions?
-		public float locZ;
-		public float locY;
-		public float locUnk;
-		public float locRoll;
-		public float locYaw;
-		public float locPitch;
-		public float Unk1;
-		public float lastX;					// Last known positions?
-		public float lastZ;
-		public float lastY;
-		public float lastUnk;
-		public float lastRoll;
-		public float lastYaw;
-		public float lastPitch;
-		public UInt32 Unk2;
-		public float moveX;					// Server given positions?
-		public float moveZ;
-		public float moveY;
-		public float moveUnk;
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 28)]
-		public byte[] Unk00;
-		public UInt32 UnknownVTablePtr;
-		public UInt32 ZoneID;				//TargetID
-		public UInt32 ServerID;
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 28)]
-		public string DisplayName;			//player is 16 max, but npc's can be up to 24.
-		public float RunSpeed;
-		public float AnimationSpeed;
-		public UInt32 WarpPtr;
-		public UInt32 Unk01;
-		public UInt32 Unk02;
-		public UInt32 Unk03;
-		public float Distance;
-		public UInt32 Unk04;			// 0x64
-		public UInt32 Unk05;			// 0x64
-		public float Heading;				// Yaw
-		public UInt32 PetOwnderID;			//only for permanent pets. charmed mobs do not fill this.
-		public UInt32 PetTP;
-		public byte HealthPercent;
-		public byte Unk06;
-		public byte Unk07;
-		public byte ModelType;
-		public byte Race;
-		public byte Unk08;
-		public UInt16 Unk09;			// Some type of timer..
-		public UInt16 Unk10;			// Deals with model update..
-		public UInt16 Unk11;
-		public byte Unk12;
-		public byte ModelFade;				// Updates the entity model. (Blinking)
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-		public byte[] Unk13;
-		public UInt16 ModelFace;
-		public UInt16 ModelHead;
-		public UInt16 ModelBody;
-		public UInt16 ModelHands;
-		public UInt16 ModelLegs;
-		public UInt16 ModelFeet;
-		public UInt16 ModelMain;
-		public UInt16 ModelSub;
-		public UInt16 ModelRanged;
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
-		public byte[] Unk14;
-		public UInt16 ActionWaitTimer1;
-		public UInt16 ActionWaitTimer2;
-		public UInt32 Flags1;				// Main Entity Rendering Flag..
-		public UInt32 Flags2;				// Name Flags.. (Party, Away, Anon, etc.)
-		public UInt32 Flags3;				// Name flags.. (Bazaar, GM icon, etc.)
-		public UInt32 Flags4;				// Entity shadow..
-		public UInt32 Flags5;				// Name visibility..
-		public float Unk15;			// Deals with fishing..
-		public UInt32 Unk16;			// Fade-in effect (Valid values: 3, 6)
-		public UInt16 Unk17;			// Fade-in misc (-1 gets reset to 0)
-		public UInt32 Unk18;
-		public UInt16 NPCSpeechLoop;
-		public UInt16 NPCSpeechFrame;
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
-		public byte[] Unk19;
-		public float RunSpeed2;
-		public UInt16 NPCWalkPos1;
-		public UInt16 NPCWalkPos2;
-		public UInt16 NPCWalkMode;
-		public UInt16 CostumeID;
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-		public string mou4;					// Always 'mou4'..
-		public UInt32 Status;
-		public UInt32 StatusServer;
-		public UInt32 StatusNpcChat;		// Only used while talking with npc..
-		public UInt32 Unk20;
-		public UInt32 Unk21;
-		public UInt32 Unk22;
-		public UInt32 Unk23;
-		public UInt32 ClaimID;				// The ID of the last person to perform an action on the mob
-		public UInt32 Unk25;			// Has something to do with inventory..
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-		public string Animation1;			// Animation strings.. idl, sil, wlk, etc..
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-		public string Animation2;
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-		public string Animation3;
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-		public string Animation4;
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-		public string Animation5;
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-		public string Animation6;
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-		public string Animation7;
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-		public string Animation8;
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-		public string Animation9;
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-		public string Animation10;
-		public UInt16 AnimationTick;		// Current ticks of the animation..
-		public UInt16 AnimationStep;		// Current step of the animation..
-		public byte AnimationPlay;			// 6 stand/sit, 12 play current emote..
-		public byte Unk26;			// Something with animations..
-		public UInt16 Unk27;			// Something with animations..
-		public UInt16 Unk28;			// Something with animations..
-		public UInt16 Unk29;			// Does nothing..
-		public UInt32 EmoteID;				// Emote string..
-		public UInt32 SpawnType;			// 0x0001 PC, 0x0002 NPC, 0x0010 Mob, 0x000D Self
-		public byte LSColorRed;
-		public byte LSColorGreen;
-		public byte LSColorBlue;
-		public byte LSUnk;
-		public UInt16 NameColor;			// Sets the players name color..
-		public byte CampaignMode;			//boolean value. 
-		public byte Unk30;
-		public UInt16 FishingTimer;			// Counts down from when you click 'fish' to either catch or real in..
-		public UInt16 FishingCastTimer;		// Counts down fromw when you click 'fish' til your bait hits the water..
-		public UInt32 FishingUnknown0001;	// Gets set to 1800 when you hook a fish.. then unknown afterward..
-		public UInt32 FishingUnknown0002;	// Gets read when you first cast your rod..
-		public UInt16 FishingUnknown0003;	// Gets set when you first cast your rod..
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
-		public byte[] Unk31;
-		public UInt16 TargetIndex;			// The players target's index.
-		public UInt16 PetIndex;
-		public UInt16 Unk32;			// Countdown after talking with an npc.
-		public byte Unk33;			// Flag after talkign with an npc.
-		public byte BallistaScoreFlag;		// Deals with Ballista / PvP, shows game information..
-		public byte PankrationEnabled;		// Displays the Pankration score flags.
-		public byte PankrationFlagFlip;		// Determines which side each flag is on.
-		public UInt16 Unk34;			// Deals with current action..
-		public float ModelSize;
-		public UInt32 Unk35;
-		public UInt16 MonstrosityFlag;		// 01 Sets the entity name to a status icon of a black cat..    
-		public UInt16 Unk36;
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 36)]
-		public string MonstrosityName;
-	}
+    //Biggest. Struct. Ever.
+    [StructLayout(LayoutKind.Sequential, Pack = 1)] //im sure some of these fields could be removed with the proper packing. but im lazy.
+    public struct SpawnInfo
+    {
+        public UInt32 EntityVTablePtr;      // CYyObject
+        public float locX;                  // Client side positions?
+        public float locZ;
+        public float locY;
+        public float locUnk;
+        public float locRoll;
+        public float locYaw;
+        public float locPitch;
+        public float Unk1;
+        public float lastX;                 // Last known positions?
+        public float lastZ;
+        public float lastY;
+        public float lastUnk;
+        public float lastRoll;
+        public float lastYaw;
+        public float lastPitch;
+        public UInt32 Unk2;
+        public float moveX;                 // Server given positions?
+        public float moveZ;
+        public float moveY;
+        public float moveUnk;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 28)]
+        public byte[] Unk00;
+        public UInt32 UnknownVTablePtr;
+        public UInt32 ZoneID;               //TargetID
+        public UInt32 ServerID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 28)]
+        public string DisplayName;          //player is 16 max, but npc's can be up to 24.
+        public float RunSpeed;
+        public float AnimationSpeed;
+        public UInt32 WarpPtr;
+        public UInt32 Unk01;
+        public UInt32 Unk02;
+        public UInt32 Unk03;
+        public float Distance;
+        public UInt32 Unk04;                // 0x64
+        public UInt32 Unk05;                // 0x64
+        public float Heading;               // Yaw
+        public UInt32 PetOwnderID;          //only for permanent pets. charmed mobs do not fill this.
+        public UInt32 PetTP;
+        public byte HealthPercent;
+        public byte Unk06;
+        public byte Unk07;
+        public byte ModelType;
+        public byte Race;
+        public byte Unk08;
+        public UInt16 Unk09;                // Some type of timer..
+        public UInt16 Unk10;                // Deals with model update..
+        public UInt16 Unk11;
+        public byte Unk12;
+        public byte ModelFade;              // Updates the entity model. (Blinking)
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+        public byte[] Unk13;
+        public UInt16 ModelFace;
+        public UInt16 ModelHead;
+        public UInt16 ModelBody;
+        public UInt16 ModelHands;
+        public UInt16 ModelLegs;
+        public UInt16 ModelFeet;
+        public UInt16 ModelMain;
+        public UInt16 ModelSub;
+        public UInt16 ModelRanged;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
+        public byte[] Unk14;
+        public UInt16 ActionWaitTimer1;
+        public UInt16 ActionWaitTimer2;
+        public UInt32 Flags1;               // Main Entity Rendering Flag..
+        public UInt32 Flags2;               // Name Flags.. (Party, Away, Anon, etc.)
+        public UInt32 Flags3;               // Name flags.. (Bazaar, GM icon, etc.)
+        public UInt32 Flags4;               // Entity shadow..
+        public UInt32 Flags5;               // Name visibility..
+        public float Unk15;                 // Deals with fishing..
+        public UInt32 Unk16;                // Fade-in effect (Valid values: 3, 6)
+        public UInt16 Unk17;                // Fade-in misc (-1 gets reset to 0)
+        public UInt32 Unk18;
+        public UInt16 NPCSpeechLoop;
+        public UInt16 NPCSpeechFrame;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+        public byte[] Unk19;
+        public float RunSpeed2;
+        public UInt16 NPCWalkPos1;
+        public UInt16 NPCWalkPos2;
+        public UInt16 NPCWalkMode;
+        public UInt16 CostumeID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+        public string mou4;                 // Always 'mou4'..
+        public UInt32 Status;
+        public UInt32 StatusServer;
+        public UInt32 StatusNpcChat;        // Only used while talking with npc..
+        public UInt32 Unk20;
+        public UInt32 Unk21;
+        public UInt32 Unk22;
+        public UInt32 Unk23;
+        public UInt32 ClaimID;              // The ID of the last person to perform an action on the mob
+        public UInt32 Unk25;                // Has something to do with inventory..
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+        public string Animation1;           // Animation strings.. idl, sil, wlk, etc..
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+        public string Animation2;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+        public string Animation3;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+        public string Animation4;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+        public string Animation5;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+        public string Animation6;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+        public string Animation7;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+        public string Animation8;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+        public string Animation9;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+        public string Animation10;
+        public UInt16 AnimationTick;        // Current ticks of the animation..
+        public UInt16 AnimationStep;        // Current step of the animation..
+        public byte AnimationPlay;          // 6 stand/sit, 12 play current emote..
+        public byte Unk26;                  // Something with animations..
+        public UInt16 Unk27;                // Something with animations..
+        public UInt16 Unk28;                // Something with animations..
+        public UInt16 Unk29;                // Does nothing..
+        public UInt32 EmoteID;              // Emote string..
+        public UInt32 SpawnType;            // 0x0001 PC, 0x0002 NPC, 0x0010 Mob, 0x000D Self
+        public byte LSColorRed;
+        public byte LSColorGreen;
+        public byte LSColorBlue;
+        public byte LSUnk;
+        public UInt16 NameColor;            // Sets the players name color..
+        public bool CampaignMode;
+        public byte Unk30;
+        public UInt16 FishingTimer;         // Counts down from when you click 'fish' to either catch or real in..
+        public UInt16 FishingCastTimer;     // Counts down fromw when you click 'fish' til your bait hits the water..
+        public UInt32 FishingUnknown0001;   // Gets set to 1800 when you hook a fish.. then unknown afterward..
+        public UInt32 FishingUnknown0002;   // Gets read when you first cast your rod..
+        public UInt16 FishingUnknown0003;   // Gets set when you first cast your rod..
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
+        public byte[] Unk31;
+        public UInt16 TargetIndex;          // The players target's index.
+        public UInt16 PetIndex;
+        public UInt16 Unk32;                // Countdown after talking with an npc.
+        public byte Unk33;                  // Flag after talkign with an npc.
+        public byte BallistaScoreFlag;      // Deals with Ballista / PvP, shows game information..
+        public byte PankrationEnabled;      // Displays the Pankration score flags.
+        public byte PankrationFlagFlip;     // Determines which side each flag is on.
+        public UInt16 Unk34;                // Deals with current action..
+        public float ModelSize;
+        public UInt32 Unk35;
+        public UInt16 MonstrosityFlag;      // 01 Sets the entity name to a status icon of a black cat..    
+        public UInt16 Unk36;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 36)]
+        public string MonstrosityName;
+    }
 
     /// <summary>A FFXI-specific spawn that updates itself from game memory.</summary>
     public class FFXISpawn : GameSpawn
@@ -682,15 +682,15 @@ namespace mappy
                     base.FillColor = Color.FromArgb(info.LSColorRed, info.LSColorGreen, info.LSColorBlue);
 
                 //set the spawn type
-				if ((info.SpawnType & (int)EntityType.PC) != 0)
+                if ((info.SpawnType & (int)EntityType.PC) != 0)
                 {
                     base.Type = SpawnType.Player;
                 }
-				else if ((info.SpawnType & (int)EntityType.NPC) != 0)
+                else if ((info.SpawnType & (int)EntityType.NPC) != 0)
                 {
                     base.Type = SpawnType.NPC;
                 }
-				else if ((info.SpawnType & (int)EntityType.MOB) != 0)
+                else if ((info.SpawnType & (int)EntityType.MOB) != 0)
                 {
                     base.Type = SpawnType.MOB;
                 }
@@ -719,27 +719,27 @@ namespace mappy
                 }
 
                 //set party/alliance flags
-				if ((info.SpawnType & (int)EntityType.GroupMember) != 0)
+                if ((info.SpawnType & (int)EntityType.GroupMember) != 0)
                     base.GroupMember = true;
-				if ((info.SpawnType & (int)EntityType.AllianceMember) != 0)
+                if ((info.SpawnType & (int)EntityType.AllianceMember) != 0)
                     base.RaidMember = true;
 
                 //set combat/visibility modes
-				if ((info.Flags1 & (int)RenderFlags1.Hidden) != 0)
+                if ((info.Flags1 & (int)RenderFlags1.Hidden) != 0)
                     base.Hidden = true;
                 if ((info.Status & (int)FFXICombatFlags.Dead) != 0 && info.Status < 4) //prevent sit and heal messing with us
                     base.Dead = true;
                 if ((info.Status & (int)FFXICombatFlags.InCombat) != 0 && info.Status < 4) //prevent sit and heal messing with us
                     base.InCombat = true;
 
-				base.Attackable = base.Type == SpawnType.MOB && !base.Dead && info.ClaimID > 0 && (info.Flags5 & ((int)RenderFlags4.Attackable << 16)) != 0;
+                base.Attackable = base.Type == SpawnType.MOB && !base.Dead && info.ClaimID > 0 && (info.Flags5 & ((int)RenderFlags4.Attackable << 16)) != 0;
 
                 //set icon if any of these situations are met
                 if (base.Type == SpawnType.MOB && base.InCombat && !base.Dead)
                 {
                     if (info.ClaimID > 0)
                     {
-						if ((info.Flags4 & ((int)RenderFlags4.Attackable << 16)) != 0) //Adjusted flag location
+                        if ((info.Flags4 & ((int)RenderFlags4.Attackable << 16)) != 0) //Adjusted flag location
                         {
                             base.Icon = MapRes.StatusBattleTarget;
                         }
@@ -753,7 +753,7 @@ namespace mappy
                         base.Icon = MapRes.StatusAggro;
                     }
                 }
-				else if ((info.Flags2 & (int)RenderFlags2.ConnectionLost << 16) != 0) //Adjusted flag location
+                else if ((info.Flags2 & (int)RenderFlags2.ConnectionLost << 16) != 0) //Adjusted flag location
                 {
                     base.Icon = MapRes.StatusDisconnected;
                 }
@@ -765,15 +765,15 @@ namespace mappy
                 {
                     base.Icon = MapRes.StatusAlert;
                 }
-				else if ((info.Flags3 & (int)RenderFlags3.GM) != 0) //Adjusted flag location
+                else if ((info.Flags3 & (int)RenderFlags3.GM) != 0) //Adjusted flag location
                 {
                     base.Icon = MapRes.StatusGM;
                 }
-                else if (base.Type == SpawnType.MOB && info.CampaignMode > 0)
+                else if (base.Type == SpawnType.MOB && info.CampaignMode)
                 {
                     base.Icon = MapRes.StatusCampaign;
                 }
-				else if ((info.Flags2 & ((int)RenderFlags2.Invisible << 24)) != 0) //Adjusted flag location
+                else if ((info.Flags2 & ((int)RenderFlags2.Invisible << 24)) != 0) //Adjusted flag location
                 {
                     base.Icon = MapRes.StatusInvisible;
                 }

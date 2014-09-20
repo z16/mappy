@@ -17,7 +17,7 @@ public class MemoryReader {
 
    [DllImport("kernel32.dll")]
    private static extern IntPtr OpenProcess(ProcessAccess dwDesiredAccess, Int32 bInheritHandle, UInt32 dwProcessId);
-	[DllImport("kernel32.dll")]
+    [DllImport("kernel32.dll")]
    private static extern Int32 CloseHandle(IntPtr hObject);
    [DllImport("kernel32.dll")]
    private static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, [In, Out] byte[] buffer, int size, out int lpNumberOfBytesRead);
@@ -321,7 +321,7 @@ public class MemoryReader {
          }
       }
       return default(T);
-	}
+    }
 
    /// <summary>
    /// Convert the binary data at the address into an array of structures of the specified type and length.
@@ -411,7 +411,7 @@ public class MemoryReader {
          }
       }
       return default(T);
-	}
+    }
 
    /// <summary>
    /// Searches the loaded process for the given byte signature within the specified module. Requires the BinarySearch library.
@@ -549,7 +549,7 @@ public sealed class MemoryHelper {
       GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
       try {
          T temp = (T)Marshal.PtrToStructure((IntPtr)((int)handle.AddrOfPinnedObject() + offset), typeof(T));
-		   return temp;
+           return temp;
 #if DEBUG
       } catch(Exception ex) {
             Debug.WriteLine("MemoryHelper ReadStruct: Unable to coerce local data into <" + typeof(T).ToString() + ">: " + ex.Message);
@@ -557,10 +557,10 @@ public sealed class MemoryHelper {
       } catch {
 #endif
       } finally {
-		   handle.Free();
+           handle.Free();
       }
       return default(T);
-	}
+    }
 
    private static MemoryHelper Instance {
       get {
