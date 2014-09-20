@@ -90,6 +90,7 @@
       <DependentUpon>Controller.cs</DependentUpon>
     </Compile>
     <Compile Include="Actions.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="fEditReplacements.cs">
       <SubType>Form</SubType>
     </Compile>

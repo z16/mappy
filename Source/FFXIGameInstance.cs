@@ -10,6 +10,8 @@ using System.IO;
 using System.Windows.Forms;
 using System.Globalization;
 
+using EntityEnums;
+
 ////////////////////////////////////////////////////////////////////////////////////
 // All image-based map data is stored in FFAssist format.
 // Formulas, map packs, and format information derived from:
@@ -453,312 +455,163 @@ namespace mappy
         }
     }
 
-    //Biggest. Struct. Ever.
-    [StructLayout(LayoutKind.Sequential, Pack = 1)] //im sure some of these fields could be removed with the proper packing. but im lazy.
-    public struct SpawnInfo
-    {
-        public Int32 u1; //possibly a signature. always seems to be this for player records. other bytes noticed here for different data types in the linked list.
-        public float PredictedX; //These coords jump. a LOT. This leaves me to believe they are predicted values by the client.
-        public float PredictedZ; //  Prediction is rooted in FPS games to give the user a smoother movement experience.
-        public float PredictedY; //  Lag in whitegate will GREATLY demonstrate the properties of these values if used.
-        public float u2;
-        public Int32 u3;
-        public float PredictedHeading;
-        public Int32 u4;
-        public float u5;
-        public float X; //These coords are used because it seems like a good mix between actual and predicted.
-        public float Z; //Also note that the assinine ordering (xzy) is corrected.
-        public float Y;
-        public float u6;
-        public Int32 u7;
-        public float Heading; //heading is expressed in radians. cos/sin will extract a normalized x/y coord.
-        public Int32 u8;
-        public Int32 u9;
-        public float X2; //These are assumed to be server confirmed (actual) coords.
-        public float Z2;
-        public float Y2;
-        public float u10;
-        public Int32 u11;
-        public Int32 u12;
-        public Int32 u13;
-        public Int32 u14;
-        public Int32 u15;
-        public Int32 u16;
-        public Int32 u17;
-        public Int32 u18;
-        public UInt32 ZoneID;
-        public UInt32 ServerID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 24)]
-        public string DisplayName; //player is 16 max, but npc's can be up to 24.
-        public Int32 pUnknown;
-        public float RunSpeed;
-        public float AnimationSpeed;
-        public Int32 pListNode; //a pointer to the node this record belongs to in a resource linked list. note that the data in this list contains many things not just spawn data. further down the chain is unstable.
-        public Int32 u19;
-        public Int32 m01; //March 2013 Update
-        public Int32 NPCTalking;
-        public float Distance;
-        public Int32 u20;
-        public Int32 u21;
-        public float Heading2;
-        public Int32 pPetOwner; //only for permanent pets. charmed mobs do not fill this.
-        public Int32 TP;
-        public byte HealthPercent;
-        public byte ManaPercent;
-        public byte u22;
-        public byte ModelType;
-        public byte Race;
-        public byte u23;
-        public Int16 u24;
-        public Int32 u25;
-        public Int64 u26;
-        public Int16 ModelFace;
-        public Int16 ModelHead;
-        public Int16 ModelBody;
-        public Int16 ModelHands;
-        public Int16 ModelLegs;
-        public Int16 ModelFeet;
-        public Int16 ModelMain;
-        public Int16 ModelSub;
-        public Int16 ModelRanged;
-        public Int16 u27;
-        public Int32 u28;
-        public Int32 u29;
-        public Int32 u30;
-        public Int16 u31;
-        public byte u32;
-        public byte u33;
-        //public Int32 u34;  --Does not exist--
-        public int Flags1;
-        public int Flags2;
-        public int Flags3;
-        public int Flags4;
-        public int Flags5;
-        public int Flags6;
-        public Int32 u35;
-        public Int16 u36;
-        public Int16 NPCSpeechLoop;
-        public Int16 NPCSpeechFrame;
-        public Int16 u37;
-        public Int32 u38;
-        public Int32 u39;
-        public Int32 u40;
-        public float RunSpeed2;
-        public Int16 NPCWalkPos1;
-        public Int16 NPCWalkPos2;
-        public Int16 NPCWalkMode;
-        public Int16 u41;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-        public string mou4; //always this. assuming an animation name
-        public UInt32 Status;
-        public UInt32 StatusServer; //im assuming this is updated after the client asks the server. there is a noticable delay between the two
-        public Int32 u42;
-        public Int32 u43;
-        public Int32 u44;
-        public Int32 u45;
-        public Int32 u46;
-        public UInt32 ClaimID; // The ID of the last person to perform an action on the mob
-        public Int32 u47;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-        public string Animation1;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-        public string Animation2;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-        public string Animation3;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-        public string Animation4;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-        public string Animation5;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-        public string Animation6;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-        public string Animation7;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-        public string Animation8;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-        public string Animation9;
-        public Int16 AnimationTime; //guessed, but something to do with the current animation
-        public Int16 AnimationStep; //guessed, but something to do with the current animation
-        public Int16 u48;
-        public Int16 u49;
-        public UInt16 EmoteID;
-        public Int16 u50;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-        public string EmoteName;
-        //public byte SpawnType;
-        public int SpawnType; // --SPawntype changed to 32-bit int--
-        //public byte u51;
-        //public Int16 u52;
-        public byte LSColorRed;
-        public byte LSColorGreen;
-        public byte LSColorBlue;
-        public byte u53;
-        public byte u54;
-        public byte u55;
-        public byte CampaignMode; //boolean value. 
-        public byte u56;
-        public byte FishingTimer;
-        public Int32 u59;
-        public Int32 u60;
-        public Int32 u61;
-        public Int32 u62;
-        public Int32 u63;
-        public Int32 u64;
-        public Int16 u65;
-        public UInt16 PetIndex;
-        public Int32 u68;
-        public Int32 u69;
-        public float ModelSize;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 148)]
-        public string u70;
-        public UInt16 FellowIndex;
-    }
-
-    public enum FFXISpawnType : byte
-    {
-        Player = 1,
-        NPC = 2,
-        GroupMember = 4, //YOU the player and your group members set both group and ally.
-        AllianceMember = 8, //YOUR alliance members not in your group set only this. 
-        MOB = 16,//Also includes event npcs that can be healed (ie besieged/assault/missions)
-        Door = 32 //could be more than just doors...
-        //???             = 64
-        //???             = 128
-    }
-
-    public enum FFXIModelType : byte
-    {
-        Player = 0,
-        NPCRacial = 1,
-        NPCUnique = 2,
-        NPCObject = 3, //so far only doors...
-        Boat = 5, //Airship and Ferries
-        //                = 7  //i know this exists, but ive only seen it once.
-    }
-
-    public enum FFXIRenderFlags : byte
-    {
-        //???               1
-        //???               2
-        Viewable = 4,
-        //???               8
-        //???               16
-        MOB = 32,
-        Hidden = 64
-        //???               128
-    }
-
-    public enum FFXISpawnFlags5 : byte
-    {
-        //???               1
-        //???               2
-        //???               4
-        //???               8
-        SeekingParty = 16,
-        AutoGroup = 32, //the orange flag that no one uses
-        AwayMode = 64,
-        Anonymous = 128
-    }
-
-    public enum FFXISpawnFlags6 : byte
-    {
-        CallForHelp = 1, //name turns yellow
-        //???               2
-        OfficialStaff = 4, //playonline "swirl" icon
-        LinkshellEquipped = 8,
-        ConnectionLost = 16 //DC icon
-        //???               32
-        //???               64
-        //???               128
-    }
-
-    public enum FFXISpawnFlags7 : byte
-    {
-        //???               1
-        //???               2
-        //???               4
-        NameHidden = 8,  //used for objects (like furniture) that do not display a name
-        Untargetable = 16, //You will not be able to target things with this flag
-        //???               32
-        InvisEffect = 64, //YOU the player is given the partial invis haze
-        InvisEffectSVR = 128 //assuming server confirmed
-    }
-
-    public enum FFXISpawnFlags8 : byte
-    {
-        SneakEffect = 1,  //footstep sounds are silenced
-        Bazaar = 2,
-        //???           4
-        TrialPlayer = 8,  //combined with GM flag   = SGM
-        TrialPlayer2 = 16, //combined with GM flag   = LGM
-        GM = 32  //combined with above two = OSM (sage sundi mode)
-        //???           64
-        //???           128
-    }
-
-    //WARNING: Some of these flags have shifted down by two bits since the july 2011 patch
-    //         and are no longer accurate. Only FFXISpawnFlags14.Attackable has been changed here.
-    public enum FFXISpawnFlags14 : byte
-    {
-        //???           1
-        //???           2
-        OpenSeason = 4,  //Set by besieged mobs. assuming this means its a free for all fight fest (claim disabled). need verification!
-        Attackable = 32  //This flag is set when the mob is in combat mode and you or pt member has the claim, but not ally/besieged/dynamis
-        //???           16
-        //???           32
-        //???           64
-        //              128 //festival decorations are known to set this
-    }
-
-    public enum FFXISpawnFlags15 : byte
-    {
-        //???           1
-        Flag2 = 2,  //Known setters: FOV crates, random hidden npc's, synergy furnaces, gargoyles in beac.s
-        Furniture = 4   //moghouse furniture
-        //???           8
-        //???           16
-        //???           32
-        //???           64
-        //???           128
-    }
-
-    public enum FFXISpawnFlags16 : byte
-    {
-        //???           1
-        //???           2
-        //???           4
-        Mentor = 8,
-        NewPlayer = 16 //has a '?' above thier head
-        //???           32
-        //???           64
-        //???           128
-    }
-
-    public enum FFXISpawnFlags17 : byte
-    {
-        //???           1
-        //???           2
-        //???           4
-        //???           8
-        //???           16
-        LevelSync = 32
-        //???           64
-        //???           128
-    }
-
-    public enum FFXICombatFlags : byte
-    {
-        InCombat = 1,  //100% confirmed: player pulls out weapon if set. WARNING: /heal /sit & some town NPCs sets this as well
-        Dead = 2   //100% confirmed: things get the death animation if set. WARNING: /sit sets this as well
-        //              4     /sit sets this
-        //              8     /sit sets this. cant move if set.
-        //              16    cant move if set
-        //              32    /heal sets this. cant move if set.
-        //              64    cant move if set
-        //              128   cant move if set
-        // this *IS* a bitfield: if you one-shot something the corpse will be 2 instead of 3 (died out of combat)
-    }
-
+	//Biggest. Struct. Ever.
+	[StructLayout(LayoutKind.Sequential, Pack = 1)] //im sure some of these fields could be removed with the proper packing. but im lazy.
+	public struct SpawnInfo
+	{
+		public UInt32 EntityVTablePtr;		// CYyObject
+		public float locX;					// Client side positions?
+		public float locZ;
+		public float locY;
+		public float locUnk;
+		public float locRoll;
+		public float locYaw;
+		public float locPitch;
+		public float Unk1;
+		public float lastX;					// Last known positions?
+		public float lastZ;
+		public float lastY;
+		public float lastUnk;
+		public float lastRoll;
+		public float lastYaw;
+		public float lastPitch;
+		public UInt32 Unk2;
+		public float moveX;					// Server given positions?
+		public float moveZ;
+		public float moveY;
+		public float moveUnk;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 28)]
+		public byte[] Unk00;
+		public UInt32 UnknownVTablePtr;
+		public UInt32 ZoneID;				//TargetID
+		public UInt32 ServerID;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 28)]
+		public string DisplayName;			//player is 16 max, but npc's can be up to 24.
+		public float RunSpeed;
+		public float AnimationSpeed;
+		public UInt32 WarpPtr;
+		public UInt32 Unk01;
+		public UInt32 Unk02;
+		public UInt32 Unk03;
+		public float Distance;
+		public UInt32 Unk04;			// 0x64
+		public UInt32 Unk05;			// 0x64
+		public float Heading;				// Yaw
+		public UInt32 PetOwnderID;			//only for permanent pets. charmed mobs do not fill this.
+		public UInt32 PetTP;
+		public byte HealthPercent;
+		public byte Unk06;
+		public byte Unk07;
+		public byte ModelType;
+		public byte Race;
+		public byte Unk08;
+		public UInt16 Unk09;			// Some type of timer..
+		public UInt16 Unk10;			// Deals with model update..
+		public UInt16 Unk11;
+		public byte Unk12;
+		public byte ModelFade;				// Updates the entity model. (Blinking)
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+		public byte[] Unk13;
+		public UInt16 ModelFace;
+		public UInt16 ModelHead;
+		public UInt16 ModelBody;
+		public UInt16 ModelHands;
+		public UInt16 ModelLegs;
+		public UInt16 ModelFeet;
+		public UInt16 ModelMain;
+		public UInt16 ModelSub;
+		public UInt16 ModelRanged;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
+		public byte[] Unk14;
+		public UInt16 ActionWaitTimer1;
+		public UInt16 ActionWaitTimer2;
+		public UInt32 Flags1;				// Main Entity Rendering Flag..
+		public UInt32 Flags2;				// Name Flags.. (Party, Away, Anon, etc.)
+		public UInt32 Flags3;				// Name flags.. (Bazaar, GM icon, etc.)
+		public UInt32 Flags4;				// Entity shadow..
+		public UInt32 Flags5;				// Name visibility..
+		public float Unk15;			// Deals with fishing..
+		public UInt32 Unk16;			// Fade-in effect (Valid values: 3, 6)
+		public UInt16 Unk17;			// Fade-in misc (-1 gets reset to 0)
+		public UInt32 Unk18;
+		public UInt16 NPCSpeechLoop;
+		public UInt16 NPCSpeechFrame;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+		public byte[] Unk19;
+		public float RunSpeed2;
+		public UInt16 NPCWalkPos1;
+		public UInt16 NPCWalkPos2;
+		public UInt16 NPCWalkMode;
+		public UInt16 CostumeID;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+		public string mou4;					// Always 'mou4'..
+		public UInt32 Status;
+		public UInt32 StatusServer;
+		public UInt32 StatusNpcChat;		// Only used while talking with npc..
+		public UInt32 Unk20;
+		public UInt32 Unk21;
+		public UInt32 Unk22;
+		public UInt32 Unk23;
+		public UInt32 ClaimID;				// The ID of the last person to perform an action on the mob
+		public UInt32 Unk25;			// Has something to do with inventory..
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+		public string Animation1;			// Animation strings.. idl, sil, wlk, etc..
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+		public string Animation2;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+		public string Animation3;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+		public string Animation4;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+		public string Animation5;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+		public string Animation6;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+		public string Animation7;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+		public string Animation8;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+		public string Animation9;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+		public string Animation10;
+		public UInt16 AnimationTick;		// Current ticks of the animation..
+		public UInt16 AnimationStep;		// Current step of the animation..
+		public byte AnimationPlay;			// 6 stand/sit, 12 play current emote..
+		public byte Unk26;			// Something with animations..
+		public UInt16 Unk27;			// Something with animations..
+		public UInt16 Unk28;			// Something with animations..
+		public UInt16 Unk29;			// Does nothing..
+		public UInt32 EmoteID;				// Emote string..
+		public UInt32 SpawnType;			// 0x0001 PC, 0x0002 NPC, 0x0010 Mob, 0x000D Self
+		public byte LSColorRed;
+		public byte LSColorGreen;
+		public byte LSColorBlue;
+		public byte LSUnk;
+		public UInt16 NameColor;			// Sets the players name color..
+		public byte CampaignMode;			//boolean value. 
+		public byte Unk30;
+		public UInt16 FishingTimer;			// Counts down from when you click 'fish' to either catch or real in..
+		public UInt16 FishingCastTimer;		// Counts down fromw when you click 'fish' til your bait hits the water..
+		public UInt32 FishingUnknown0001;	// Gets set to 1800 when you hook a fish.. then unknown afterward..
+		public UInt32 FishingUnknown0002;	// Gets read when you first cast your rod..
+		public UInt16 FishingUnknown0003;	// Gets set when you first cast your rod..
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
+		public byte[] Unk31;
+		public UInt16 TargetIndex;			// The players target's index.
+		public UInt16 PetIndex;
+		public UInt16 Unk32;			// Countdown after talking with an npc.
+		public byte Unk33;			// Flag after talkign with an npc.
+		public byte BallistaScoreFlag;		// Deals with Ballista / PvP, shows game information..
+		public byte PankrationEnabled;		// Displays the Pankration score flags.
+		public byte PankrationFlagFlip;		// Determines which side each flag is on.
+		public UInt16 Unk34;			// Deals with current action..
+		public float ModelSize;
+		public UInt32 Unk35;
+		public UInt16 MonstrosityFlag;		// 01 Sets the entity name to a status icon of a black cat..    
+		public UInt16 Unk36;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 36)]
+		public string MonstrosityName;
+	}
 
     /// <summary>A FFXI-specific spawn that updates itself from game memory.</summary>
     public class FFXISpawn : GameSpawn
@@ -803,9 +656,9 @@ namespace mappy
                     return;
 
                 m_serverID = info.ServerID;
-                base.Location.X = info.X;
-                base.Location.Y = info.Y;
-                base.Location.Z = info.Z;
+                base.Location.X = info.moveX;
+                base.Location.Y = info.moveY;
+                base.Location.Z = info.moveZ;
                 base.Heading = info.Heading;
                 base.HealthPercent = info.HealthPercent;
                 base.Speed = info.RunSpeed;
@@ -819,7 +672,6 @@ namespace mappy
                 base.Distance = 0;
                 base.PetIndex = info.PetIndex;
                 base.Attackable = true;
-                base.FellowIndex = info.FellowIndex;
 
                 //calculate the distance between the player and this spawn.
                 if (m_instance.Engine.Game.Player != null && m_instance.Engine.Game.Player != this)
@@ -830,15 +682,15 @@ namespace mappy
                     base.FillColor = Color.FromArgb(info.LSColorRed, info.LSColorGreen, info.LSColorBlue);
 
                 //set the spawn type
-                if ((info.SpawnType & (int)FFXISpawnType.Player) != 0)
+				if ((info.SpawnType & (int)EntityType.PC) != 0)
                 {
                     base.Type = SpawnType.Player;
                 }
-                else if ((info.SpawnType & (int)FFXISpawnType.NPC) != 0)
+				else if ((info.SpawnType & (int)EntityType.NPC) != 0)
                 {
                     base.Type = SpawnType.NPC;
                 }
-                else if ((info.SpawnType & (int)FFXISpawnType.MOB) != 0)
+				else if ((info.SpawnType & (int)EntityType.MOB) != 0)
                 {
                     base.Type = SpawnType.MOB;
                 }
@@ -867,27 +719,27 @@ namespace mappy
                 }
 
                 //set party/alliance flags
-                if ((info.SpawnType & (int)FFXISpawnType.GroupMember) != 0)
+				if ((info.SpawnType & (int)EntityType.GroupMember) != 0)
                     base.GroupMember = true;
-                if ((info.SpawnType & (int)FFXISpawnType.AllianceMember) != 0)
+				if ((info.SpawnType & (int)EntityType.AllianceMember) != 0)
                     base.RaidMember = true;
 
                 //set combat/visibility modes
-                if ((info.Flags1 & (int)FFXIRenderFlags.Hidden) != 0)
+				if ((info.Flags1 & (int)RenderFlags1.Hidden) != 0)
                     base.Hidden = true;
                 if ((info.Status & (int)FFXICombatFlags.Dead) != 0 && info.Status < 4) //prevent sit and heal messing with us
                     base.Dead = true;
                 if ((info.Status & (int)FFXICombatFlags.InCombat) != 0 && info.Status < 4) //prevent sit and heal messing with us
                     base.InCombat = true;
 
-                base.Attackable = base.Type == SpawnType.MOB && !base.Dead && info.ClaimID > 0 && (info.Flags5 & ((int)FFXISpawnFlags14.Attackable << 16)) != 0;
+				base.Attackable = base.Type == SpawnType.MOB && !base.Dead && info.ClaimID > 0 && (info.Flags5 & ((int)RenderFlags4.Attackable << 16)) != 0;
 
                 //set icon if any of these situations are met
                 if (base.Type == SpawnType.MOB && base.InCombat && !base.Dead)
                 {
                     if (info.ClaimID > 0)
                     {
-                        if ((info.Flags4 & ((int)FFXISpawnFlags14.Attackable << 16)) != 0) //Adjusted flag location
+						if ((info.Flags4 & ((int)RenderFlags4.Attackable << 16)) != 0) //Adjusted flag location
                         {
                             base.Icon = MapRes.StatusBattleTarget;
                         }
@@ -901,7 +753,7 @@ namespace mappy
                         base.Icon = MapRes.StatusAggro;
                     }
                 }
-                else if ((info.Flags2 & (int)FFXISpawnFlags6.ConnectionLost << 16) != 0) //Adjusted flag location
+				else if ((info.Flags2 & (int)RenderFlags2.ConnectionLost << 16) != 0) //Adjusted flag location
                 {
                     base.Icon = MapRes.StatusDisconnected;
                 }
@@ -913,7 +765,7 @@ namespace mappy
                 {
                     base.Icon = MapRes.StatusAlert;
                 }
-                else if ((info.Flags3 & (int)FFXISpawnFlags8.GM) != 0) //Adjusted flag location
+				else if ((info.Flags3 & (int)RenderFlags3.GM) != 0) //Adjusted flag location
                 {
                     base.Icon = MapRes.StatusGM;
                 }
@@ -921,7 +773,7 @@ namespace mappy
                 {
                     base.Icon = MapRes.StatusCampaign;
                 }
-                else if ((info.Flags2 & ((int)FFXISpawnFlags7.InvisEffectSVR << 24)) != 0) //Adjusted flag location
+				else if ((info.Flags2 & ((int)RenderFlags2.Invisible << 24)) != 0) //Adjusted flag location
                 {
                     base.Icon = MapRes.StatusInvisible;
                 }
