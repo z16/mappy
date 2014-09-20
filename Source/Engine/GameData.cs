@@ -245,7 +245,6 @@ namespace MapEngine
             FillColor = Color.Black;
             ClaimID = 0;
             PetIndex = 0;
-            FellowIndex = 0;
             GroupMember = false;
             RaidMember = false;
             DEBUG = "";
@@ -274,7 +273,6 @@ namespace MapEngine
         public Color FillColor { get; protected set; }
         public uint ClaimID { get; set; }
         public uint PetIndex { get; set; }
-        public uint FellowIndex { get; set; }
         public bool RaidMember { get; set; }
         public bool GroupMember { get; set; }
         public bool Attackable { get; protected set; }
