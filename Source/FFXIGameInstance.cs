@@ -588,6 +588,7 @@ namespace mappy
         public byte LSColorBlue;
         public byte LSUnk;
         public UInt16 NameColor;            // Sets the players name color..
+        [MarshalAs(UnmanagedType.I1)]
         public bool CampaignMode;
         public byte Unk30;
         public UInt16 FishingTimer;         // Counts down from when you click 'fish' to either catch or real in..
