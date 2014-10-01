@@ -64,7 +64,7 @@ namespace EntityEnums
     {
         NameDeletion = 0x00000080,
         Charmed = 0x00002000,
-        Attackable = 0x01000000,
+        Attackable = 0x10000000,
     }
 
     [Flags]

@@ -733,14 +733,14 @@ namespace mappy
                 if ((info.Status & (int)FFXICombatFlags.InCombat) != 0 && info.Status < 4) //prevent sit and heal messing with us
                     base.InCombat = true;
 
-                base.Attackable = base.Type == SpawnType.MOB && !base.Dead && info.ClaimID > 0 && (info.Flags5 & ((int)RenderFlags4.Attackable << 16)) != 0;
+                base.Attackable = base.Type == SpawnType.MOB && !base.Dead && info.ClaimID > 0 && (info.Flags4 & (int)RenderFlags4.Attackable) != 0;
 
                 //set icon if any of these situations are met
                 if (base.Type == SpawnType.MOB && base.InCombat && !base.Dead)
                 {
                     if (info.ClaimID > 0)
                     {
-                        if ((info.Flags4 & ((int)RenderFlags4.Attackable << 16)) != 0) //Adjusted flag location
+                        if ((info.Flags4 & (int)RenderFlags4.Attackable) != 0)
                         {
                             base.Icon = MapRes.StatusBattleTarget;
                         }
