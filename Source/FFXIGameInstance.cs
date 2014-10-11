@@ -754,7 +754,7 @@ namespace mappy
                         base.Icon = MapRes.StatusAggro;
                     }
                 }
-                else if ((info.Flags2 & (int)RenderFlags2.ConnectionLost << 16) != 0) //Adjusted flag location
+                else if ((info.Flags2 & (int)RenderFlags2.ConnectionLost) != 0)
                 {
                     base.Icon = MapRes.StatusDisconnected;
                 }
