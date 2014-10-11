@@ -51,6 +51,7 @@ namespace EntityEnums
     public enum RenderFlags3
     {
         Object = 0x00000008,
+        InvisibleEffect = 0x00000080,
         Bazaar = 0x00000200,
         Promotion = 0x00000800, // 0x00000008 triggers this...
         Promotion2 = 0x00001000, // as does 0x00000010, individually, however...

@@ -774,7 +774,7 @@ namespace mappy
                 {
                     base.Icon = MapRes.StatusCampaign;
                 }
-                else if ((info.Flags2 & ((int)RenderFlags2.Invisible << 24)) != 0) //Adjusted flag location
+                else if ((info.Flags3 & (int)RenderFlags3.InvisibleEffect) != 0)
                 {
                     base.Icon = MapRes.StatusInvisible;
                 }
