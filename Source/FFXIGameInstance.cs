@@ -493,6 +493,8 @@ namespace mappy
         public UInt32 Unk01;
         public UInt32 Unk02;
         public UInt32 Unk03;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
+        public byte[] Unk04Point5SeeThisIsTheProblemWithSequentialNumberingOfUnknowns;
         public float Distance;
         public UInt32 Unk04;                // 0x64
         public UInt32 Unk05;                // 0x64
@@ -536,7 +538,7 @@ namespace mappy
         public UInt32 Unk18;
         public UInt16 NPCSpeechLoop;
         public UInt16 NPCSpeechFrame;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
         public byte[] Unk19;
         public float RunSpeed2;
         public UInt16 NPCWalkPos1;
