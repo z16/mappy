@@ -492,9 +492,8 @@ namespace mappy
         public UInt32 WarpPtr;
         public UInt32 Unk01;
         public UInt32 Unk02;
-        public UInt32 Unk03;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
-        public byte[] Unk04Point5SeeThisIsTheProblemWithSequentialNumberingOfUnknowns;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 9)]
+        public UInt32[] Unk03;
         public float Distance;
         public UInt32 Unk04;                // 0x64
         public UInt32 Unk05;                // 0x64
@@ -509,10 +508,8 @@ namespace mappy
         public byte Unk08;
         public UInt16 Unk09;                // Some type of timer..
         public UInt16 Unk10;                // Deals with model update..
-        public UInt16 Unk11;
-        public byte Unk12;
         public byte ModelFade;              // Updates the entity model. (Blinking)
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 9)]
         public byte[] Unk13;
         public UInt16 ModelFace;
         public UInt16 ModelHead;
