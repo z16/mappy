@@ -37,7 +37,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\mappy\debug\</OutputPath>
+    <OutputPath>..\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -48,7 +48,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\mappy\release\</OutputPath>
+    <OutputPath>..\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -331,12 +331,12 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if "$(ConfigurationName)" == "Debug" (
-    xcopy "$(SolutionDir)..\Vector Maps" "$(TargetDir)maps" /Y /E /I /R
-    xcopy "$(SolutionDir)..\Game Maps" "$(TargetDir)maps" /Y /E /I /R
+    xcopy "$(SolutionDir)..\Maps\Vector Maps" "$(TargetDir)maps" /Y /E /I /R
+    xcopy "$(SolutionDir)..\Maps\Game Maps" "$(TargetDir)maps" /Y /E /I /R
 ) ELSE (
     if "$(ConfigurationName)" == "Release" (
-        xcopy "$(SolutionDir)..\Vector Maps" "$(TargetDir)maps" /Y /E /I /R
-        xcopy "$(SolutionDir)..\Game Maps" "$(TargetDir)maps" /Y /E /I /R
+        xcopy "$(SolutionDir)..\Maps\Vector Maps" "$(TargetDir)maps" /Y /E /I /R
+        xcopy "$(SolutionDir)..\Maps\Game Maps" "$(TargetDir)maps" /Y /E /I /R
     ) ELSE (
         DEL /Q "$(SolutionDir)..\Release\Maps.zip"
 
