@@ -492,7 +492,7 @@ namespace mappy
         public UInt32 WarpPtr;
         public UInt32 Unk01;
         public UInt32 Unk02;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 9)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
         public UInt32[] Unk03;
         public float Distance;
         public UInt32 Unk04;                // 0x64
