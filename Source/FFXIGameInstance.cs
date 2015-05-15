@@ -535,7 +535,7 @@ namespace mappy
         public UInt32 Unk18;
         public UInt16 NPCSpeechLoop;
         public UInt16 NPCSpeechFrame;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 18)]
         public byte[] Unk19;
         public float RunSpeed2;
         public UInt16 NPCWalkPos1;
