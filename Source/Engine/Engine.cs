@@ -1766,6 +1766,44 @@ namespace MapEngine
                         g.DrawLine(pPetChain, headX - offX, headY - offY, tailX, tailY);
                         DrawArrowHead(g, pPetChain, headX - offX, headY - offY, rads, 10f, 5f);
                     }
+                    if (m_drawPetLines && spawn.TargetIndex > 0 && m_game.Spawns.ContainsIndex(spawn.TargetIndex))
+                    {
+						if (spawn != m_game.Player)
+						{
+							GameSpawn target = m_game.Spawns[spawn.TargetIndex];
+							float headX = CalcClientCoordX(target.Location.X);
+							float headY = CalcClientCoordY(target.Location.Y);
+							float tailX = CalcClientCoordX(spawn.Location.X);
+							float tailY = CalcClientCoordY(spawn.Location.Y);
+							float rads = (float)Math.Atan2(headY - tailY, headX - tailX); //calculate the line angle
+							float size = 0;
+							switch (spawn.Type)
+							{
+								case SpawnType.Player:
+									size = m_playerSize;
+									break;
+								case SpawnType.NPC:
+									size = m_NPCSize;
+									break;
+								case SpawnType.MOB:
+									size = m_MOBSize;
+									break;
+								case SpawnType.Hidden:
+									size = m_HiddenSize;
+									break;
+								default:
+									size = 4.0f;
+									break;
+							}
+
+							float offX = (size * (float)Math.Cos(rads));           //move the line and arrow out a bit so its not in the dead center
+							float offY = (size * (float)Math.Sin(rads));
+						
+							//draw ze lines
+							g.DrawLine(pPetChain, headX - offX, headY - offY, tailX, tailY);
+							DrawArrowHead(g, pPetChain, headX - offX, headY - offY, rads, 10f, 5f);
+						}
+					}
                     if (m_drawClaimLines && spawn.ClaimID > 0 && m_game.Spawns.ContainsIndex(spawn.ClaimID))
                     {
                         GameSpawn claimee = m_game.Spawns[spawn.ClaimID];
