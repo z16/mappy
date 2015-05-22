@@ -670,6 +670,7 @@ namespace mappy
                 base.Name = info.DisplayName;
                 base.Level = -1; //level is never known in FFXI
                 base.Distance = 0;
+                base.TargetIndex = info.TargetIndex;
                 base.PetIndex = info.PetIndex;
                 base.Attackable = true;
 
