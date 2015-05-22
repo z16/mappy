@@ -1768,7 +1768,7 @@ namespace MapEngine
                     }
                     if (m_drawPetLines && spawn.TargetIndex > 0 && m_game.Spawns.ContainsIndex(spawn.TargetIndex))
                     {
-						if (spawn != m_game.Player)
+					if (spawn != m_game.Player)
 						{
 							GameSpawn target = m_game.Spawns[spawn.TargetIndex];
 							float headX = CalcClientCoordX(target.Location.X);
@@ -1795,10 +1795,10 @@ namespace MapEngine
 									size = 4.0f;
 									break;
 							}
-
+                            
 							float offX = (size * (float)Math.Cos(rads));           //move the line and arrow out a bit so its not in the dead center
 							float offY = (size * (float)Math.Sin(rads));
-						
+						    
 							//draw ze lines
 							g.DrawLine(pPetChain, headX - offX, headY - offY, tailX, tailY);
 							DrawArrowHead(g, pPetChain, headX - offX, headY - offY, rads, 10f, 5f);
