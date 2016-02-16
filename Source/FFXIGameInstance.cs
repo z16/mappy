@@ -492,24 +492,22 @@ namespace mappy
         public UInt32 WarpPtr;
         public UInt32 Unk01;
         public UInt32 Unk02;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 11)]
         public UInt32[] Unk03;
         public float Distance;
         public UInt32 Unk04;                // 0x64
         public UInt32 Unk05;                // 0x64
         public float Heading;               // Yaw
-        public UInt32 PetOwnderID;          //only for permanent pets. charmed mobs do not fill this.
-        public UInt32 PetTP;
+        public UInt32 PetOwnerID;          //only for permanent pets. charmed mobs do not fill this.
         public byte HealthPercent;
         public byte Unk06;
-        public byte Unk07;
         public byte ModelType;
         public byte Race;
-        public byte Unk08;
-        public UInt16 Unk09;                // Some type of timer..
-        public UInt16 Unk10;                // Deals with model update..
+        public byte Unk07;
+        public UInt16 Unk08;                // Some type of timer..
+        public byte Unk09;                // Deals with model update..
         public byte ModelFade;              // Updates the entity model. (Blinking)
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 9)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 7)]
         public byte[] Unk13;
         public UInt16 ModelFace;
         public UInt16 ModelHead;
@@ -581,6 +579,8 @@ namespace mappy
         public UInt16 Unk28;                // Something with animations..
         public UInt16 Unk29;                // Does nothing..
         public UInt32 EmoteID;              // Emote string..
+        public UInt32 Unk30;
+        public UInt32 Unk31;
         public UInt32 SpawnType;            // 0x0001 PC, 0x0002 NPC, 0x0010 Mob, 0x000D Self
         public byte LSColorRed;
         public byte LSColorGreen;
@@ -589,26 +589,28 @@ namespace mappy
         public UInt16 NameColor;            // Sets the players name color..
         [MarshalAs(UnmanagedType.I1)]
         public bool CampaignMode;
-        public byte Unk30;
+        public byte Unk32;
         public UInt16 FishingTimer;         // Counts down from when you click 'fish' to either catch or real in..
         public UInt16 FishingCastTimer;     // Counts down fromw when you click 'fish' til your bait hits the water..
         public UInt32 FishingUnknown0001;   // Gets set to 1800 when you hook a fish.. then unknown afterward..
         public UInt32 FishingUnknown0002;   // Gets read when you first cast your rod..
         public UInt16 FishingUnknown0003;   // Gets set when you first cast your rod..
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
-        public byte[] Unk31;
+        public byte[] Unk33;
         public UInt16 TargetIndex;          // The players target's index.
         public UInt16 PetIndex;
-        public UInt16 Unk32;                // Countdown after talking with an npc.
-        public byte Unk33;                  // Flag after talkign with an npc.
+        public UInt16 Unk34;                // Countdown after talking with an npc.
+        public byte Unk35;                  // Flag after talkign with an npc.
         public byte BallistaScoreFlag;      // Deals with Ballista / PvP, shows game information..
         public byte PankrationEnabled;      // Displays the Pankration score flags.
         public byte PankrationFlagFlip;     // Determines which side each flag is on.
-        public UInt16 Unk34;                // Deals with current action..
+        public UInt16 Unk36;                // Deals with current action..
         public float ModelSize;
-        public UInt32 Unk35;
-        public UInt16 MonstrosityFlag;      // 01 Sets the entity name to a status icon of a black cat..    
-        public UInt16 Unk36;
+        public UInt32 Unk37;    
+        public UInt16 Unk38;
+        public UInt16 Unk39;
+        public UInt16 MonstrosityFlag;      // 01 Sets the entity name to a status icon of a black cat..
+        public UInt16 Unk40;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 36)]
         public string MonstrosityName;
     }
@@ -670,6 +672,7 @@ namespace mappy
                 base.Name = info.DisplayName;
                 base.Level = -1; //level is never known in FFXI
                 base.Distance = 0;
+                base.TargetIndex = info.TargetIndex;
                 base.PetIndex = info.PetIndex;
                 base.Attackable = true;
 

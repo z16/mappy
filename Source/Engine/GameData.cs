@@ -244,6 +244,7 @@ namespace MapEngine
             Icon = null;
             FillColor = Color.Black;
             ClaimID = 0;
+            TargetIndex = 0;
             PetIndex = 0;
             GroupMember = false;
             RaidMember = false;
@@ -272,6 +273,7 @@ namespace MapEngine
         public Image Icon { get; protected set; }
         public Color FillColor { get; protected set; }
         public uint ClaimID { get; set; }
+        public uint TargetIndex { get; set; }
         public uint PetIndex { get; set; }
         public bool RaidMember { get; set; }
         public bool GroupMember { get; set; }
@@ -282,3 +284,4 @@ namespace MapEngine
         public virtual void Update() { }
     }
 }
+
